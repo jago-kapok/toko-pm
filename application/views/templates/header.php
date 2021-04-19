@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Toko Pandu Mulya - Nganjuk</title>
+  <title>Pandu Mulya - Nganjuk</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -28,9 +28,10 @@
 	.dataTables_filter { display: none }
 	:not(.layout-fixed) .main-sidebar { height: 110%}
 	.btn-form { width: 100px }
-	.for-alert { color:#155724; background-color:#d4edda; border-color:#c3e6cb }
+	.alert-success { color:#155724; background-color:#d4edda; border-color:#c3e6cb }
+	.alert-danger { color:#571515; background-color:#edd4d4; border-color:#e6c3c3 }
 	.nav-sidebar .nav-item > .nav-link { color: white }
-	[class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link { color: #5a5a5a }
+	[class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link { color: white }
 	.btn.btn-xs { width: 2em }
 	select#pagelength { border-radius: 0 .2em .2em 0;
   </style>
@@ -75,13 +76,13 @@
     </ul>
   </nav>
 
-  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background: linear-gradient(to right, #44e0c8, #44b7e3)">
-    <a href="javascript:void(0)" class="brand-link" style="border-bottom: 1px solid; background-color: grey">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background: #5f676e">
+    <a href="javascript:void(0)" class="brand-link" style="border-bottom: 1px solid; background-color: #5f676e">
       <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo.png"
         alt="Meter Monitoring"
         class="brand-image img-circle elevation-3"
         style="opacity: .8">
-      <span class="brand-text font-weight-light">&nbsp;&nbsp;Toko Pandu Mulya</span>
+      <span class="brand-text font-weight-light">&nbsp;&nbsp;Pandu Mulya</span>
     </a>
 	
 	<div class="sidebar">
@@ -115,64 +116,126 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('category'); ?>" class="nav-link">
+                <a href="<?= base_url('category'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Kategori</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Customer</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-dot-circle"></i>
-              <p>
-                &nbsp;&nbsp;Target Data
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url('target'); ?>" class="nav-link">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;P2TL</p>
+                  <p>&nbsp;&nbsp;Pelanggan</p>
                 </a>
               </li>
 			  <li class="nav-item">
-                <a href="<?= base_url('harmet'); ?>" class="nav-link">
+                <a href="<?= base_url('item'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Harmet</p>
+                  <p>&nbsp;&nbsp;Barang</p>
                 </a>
               </li>
             </ul>
           </li>
+		  
 		  <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-history"></i>
+              <i class="nav-icon fas fa-file"></i>
               <p>
-                &nbsp;&nbsp;View History
+                &nbsp;&nbsp;Penawaran
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('target/history'); ?>" class="nav-link">
+                <a href="<?= base_url('category'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;P2TL</p>
+                  <p>&nbsp;&nbsp;Penawaran Baru</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Data Penawaran</p>
                 </a>
               </li>
             </ul>
           </li>
+		  
+		  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file"></i>
+              <p>
+                &nbsp;&nbsp;Penjualan
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Data Penjualan</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+		  
+		  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file"></i>
+              <p>
+                &nbsp;&nbsp;Pembelian
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Data Pembelian</p>
+                </a>
+              </li>
+			  <li class="nav-item">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Supplier</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+		  
+		  <li class="nav-item">
+            <a href="<?= base_url('/'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                &nbsp;&nbsp;Data Stok
+              </p>
+            </a>
+          </li>
+		  
+		  <li class="nav-item">
+            <a href="<?= base_url('/'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-history"></i>
+              <p>
+                &nbsp;&nbsp;Riwayat Stok
+              </p>
+            </a>
+          </li>
+		  
+		  <li class="nav-item">
+            <a href="<?= base_url('/'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-history"></i>
+              <p>
+                &nbsp;&nbsp;Laporan
+              </p>
+            </a>
+          </li>
+		  
+		  <li class="dropdown-divider"></li>
+		  
 		  <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
-                &nbsp;&nbsp;Settings
+                &nbsp;&nbsp;Pengaturan
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -180,12 +243,18 @@
               <li class="nav-item">
                 <a href="<?= base_url('harmet/setting'); ?>" class="nav-link">
                   <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Harmet Target</p>
+                  <p>&nbsp;&nbsp;Manajemen User</p>
+                </a>
+              </li>
+			  <li class="nav-item">
+                <a href="<?= base_url('harmet/setting'); ?>" class="nav-link">
+                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Profil Usaha</p>
                 </a>
               </li>
             </ul>
           </li>
-		  <li class="dropdown-divider"></li>
+
 		  <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-download"></i>

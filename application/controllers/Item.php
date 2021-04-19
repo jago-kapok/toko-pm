@@ -1,57 +1,50 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Category extends CI_Controller
+class Item extends CI_Controller
 {	
     public function __construct()
     {
         parent::__construct();
 		// authentication();
-
-		$this->load->model("CategoryModel", "mod_category");
     }
 
     public function index()
     {
-        $data['title'] = 'Data Kategori';
+        $data['title'] = 'Data Barang';
 
         $this->load->view('templates/header', $data);
-        $this->load->view('category/index', $data);
+        $this->load->view('item/index', $data);
         $this->load->view('templates/footer');
-        $this->load->view('templates/js/category');
+        $this->load->view('templates/js/item');
     }
 	
 	public function getData()
 	{
-		$list = $this->mod_category->getAll();
-		$data = [];
-		$no = $_POST["start"];
-		foreach($list as $val)
-		{
-			$no++;
-			$row					= [];
-			$row["no"]				= $no;
-			$row["category_code"]	= $val->category_code;
-			$row["category_desc"]	= $val->category_desc;
-			$row["action"]			= "	<a href=\"javascript:void(0)\" class=\"btn btn-xs btn-info\" data-toggle=\"modal\" data-target=\"#category_update\"
-				data-category_id=\"".$val->category_id."\"
-				data-category_desc=\"".$val->category_desc."\"
-			>
-											<i class=\"fa fa-edit\"></i>
-										</a>&nbsp;
-										<a href=\"category/delete/".$val->category_id."\" class=\"btn btn-xs btn-danger\" onclick=\"return confirm('Hapus data ini ?')\">
-											<i class=\"fa fa-trash\"></i>
-										</a>";
-			$data[] = $row;
-		}
-
-		$output = array(
-			"draw"				=> $_POST['draw'],
-			"recordsTotal"		=> $this->mod_category->countAll(),
-			"recordsFiltered"	=> $this->mod_category->countFilter(),
-			"data"				=> $data,
+		$this->load->library("datatables_ssp");
+		$_table = "item";
+		$_conn 	= [
+			"user" 	=> $this->db->username,
+			"pass" 	=> $this->db->password,
+			"db" 	=> $this->db->database,
+			"host" 	=> $this->db->hostname,
+			"port" 	=> $this->db->port
+		];
+		$_key	= "item_id";
+		$_coll	= [
+			["db" => "item_code",	"dt" => "customer_code"],
+			["db" => "customer_name",	"dt" => "customer_name"],
+			["db" => "customer_address","dt" => "customer_address"],
+			["db" => "customer_phone",	"dt" => "customer_phone"],
+			["db" => "item_id",		"dt" => "item_id"]
+		];
+		
+		$_where	= NULL;
+		$_join	= NULL;
+		
+		echo json_encode(
+			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, $_join)
 		);
-		echo json_encode($output);
 	}
 	
 	public function create()

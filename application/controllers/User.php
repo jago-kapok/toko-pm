@@ -6,137 +6,117 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-		authentication();
+		//~ authentication();
     }
 
     public function index()
     {
-        $data['title'] = 'User Database';
-		$data['user'] = $this->ModelMaster->getAll('user')->result_array();
+        $data['title'] = 'Manajemen Pengguna';
+        $data['level'] = $this->db->get('level')->result_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('user/index', $data);
         $this->load->view('templates/footer');
+		$this->load->view('templates/js/user');
     }
+	
+	public function getData()
+	{
+		$this->load->library("datatables_ssp");
+		$_table = "user";
+		$_conn 	= [
+			"user" 	=> $this->db->username,
+			"pass" 	=> $this->db->password,
+			"db" 	=> $this->db->database,
+			"host" 	=> $this->db->hostname,
+			"port" 	=> $this->db->port
+		];
+		$_key	= "user_id";
+		$_coll	= [
+			["db" => "user_fullname",	"dt" => "user_fullname"],
+			["db" => "user_name",		"dt" => "user_name"],
+			["db" => "user_address",	"dt" => "user_address"],
+			["db" => "user_phone",		"dt" => "user_phone"],
+			["db" => "level_desc",		"dt" => "level_desc"],
+			["db" => "user_id",			"dt" => "user_id"],
+			
+			["db" => "user_level",		"dt" => "user_level"]
+		];
+		
+		$_where	= NULL;
+		$_join	= "JOIN level ON user.user_level = level.level_id";
+
+		echo json_encode(
+			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, $_join)
+		);
+	}
 	
 	public function create()
 	{
-		$nama_user = $this->input->post('nama_user');
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$id_level = $this->input->post('id_level');
-		$email_user = $this->input->post('email_user');
-		$telp_user = $this->input->post('telp_user');
+		$user_fullname	= $this->input->post('user_fullname');
+		$user_name		= $this->input->post('user_name');
+		$user_password	= $this->input->post('user_password');
+		$user_address	= $this->input->post('user_address');
+		$user_phone		= $this->input->post('user_phone');
+		$user_level		= $this->input->post('user_level');
 		
 		$data = array(
-			'nama_user' => $nama_user,
-			'username' => $username,
-			'password' => $password,
-			'id_level' => $id_level,
-			'email_user' => $email_user,
-			'telp_user' => $telp_user,
+			'user_fullname'	=> $user_fullname,
+			'user_name'		=> $user_name,
+			'user_password'	=> $user_password,
+			'user_address'	=> $user_address,
+			'user_phone'	=> $user_phone,
+			'user_level'	=> $user_level,
 		);
 	 
-		$this->ModelMaster->add('user', $data);
-		$this->session->set_flashdata('message', '<div class="alert for-alert alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;New data was added successfully !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$exist = $this->MasterModel->getBy('user', array('user_name'=>$user_name));
+		
+		if($exist->num_rows() == 0){
+			$this->MasterModel->add('user', $data);
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Pengguna baru berhasil ditambahkan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Username '.strtoupper($user_name).' sudah digunakan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		}
 		redirect('user');
 	}
 	
 	public function update()
 	{
-		$id_user = $this->input->post('id_user');
-		$nama_user = $this->input->post('nama_user');
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$id_level = $this->input->post('id_level');
-		$email_user = $this->input->post('email_user');
-		$telp_user = $this->input->post('telp_user');
+		$user_id		= $this->input->post('user_id');
+		$user_fullname	= $this->input->post('user_fullname');
+		$user_name		= $this->input->post('user_name');
+		$user_address	= $this->input->post('user_address');
+		$user_phone		= $this->input->post('user_phone');
+		$user_level		= $this->input->post('user_level');
 		
 		$data = array(
-			'nama_user' => $nama_user,
-			'username' => $username,
-			'password' => $password,
-			'id_level' => $id_level,
-			'email_user' => $email_user,
-			'telp_user' => $telp_user,
+			'user_fullname'	=> $user_fullname,
+			'user_name'		=> $user_name,
+			'user_address'	=> $user_address,
+			'user_phone'	=> $user_phone,
+			'user_level'	=> $user_level,
 		);
-		$where = array('id_user' => $id_user);
+		$where = array('user_id' => $user_id);
 	 
-		$this->ModelMaster->edit('user', $where, $data);
-		$this->session->set_flashdata('message', '<div class="alert for-alert alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data for : '.$nama_user.' was updated !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$exist = $this->MasterModel->getBy('user', array('user_name'=>$user_name));
+		
+		if($exist->num_rows() <= 1){
+			$this->MasterModel->edit('user', $where, $data);
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data pengguna '.strtoupper($user_name).' berhasil diperbarui !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data '.strtoupper($user_name).' sudah ada !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		}
 		redirect('user');
 	}
 
     public function delete()
     {
-        $where = ['id_user' => $this->uri->segment(3)];
-		$query = $this->ModelMaster->getBy('user', $where);
+        $where = ['user_id' => $this->uri->segment(3)];
+		$query = $this->MasterModel->getBy('user', $where);
 		$row = $query->row();
 		
-        $this->ModelMaster->delete('user', $where);
-		$this->session->set_flashdata('message', '<div class="alert for-alert alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data for : '.$row->nama_user.' was deleted !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        $this->MasterModel->delete('user', $where);
+		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data pengguna'.strtoupper($row->user_name).' berhasil dihapus !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('user');
-    }
-	
-	public function import(){
-		require './application/libraries/excel_reader2.php';
-		// require './application/libraries/SpreadsheetReader.php';
-		
-		$config['upload_path']		= './assets/tmp_file/';
-		$config['allowed_types']	= 'xls|xlsx';
-		$config['max_size']			= 2048;
-		$config['file_name']		= date("Y-m-d");
-		
-		$this->load->library('upload', $config);
-		
-		if(!$this->upload->do_upload('excel_file')){
-			$this->session->set_flashdata('message', '<div class="alert for-alert alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Error while uploading file !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			redirect('user');
-		} else {
-			$data = new Spreadsheet_Excel_Reader($_FILES["excel_file"]["tmp_name"]);
-			$baris = $data->rowcount($sheet_index = 0);
-			
-			for($i=2; $i<=$baris; $i++){
-				$nama_user	= $data->val($i, 1);
-				$username	= $data->val($i, 2);
-				$password	= $data->val($i, 3);
-				$id_level	= $data->val($i, 4);
-				$email_user	= $data->val($i, 5);
-				$telp_user	= $data->val($i, 6);
-
-				if($nama_user != ''){
-					$row = $this->db->query("INSERT INTO user (
-							nama_user,
-							username,
-							password,
-							id_level,
-							email_user,
-							telp_user
-						) VALUES (
-							'$nama_user',
-							'$username',
-							'$password',
-							'$id_level',
-							'$email_user',
-							'$telp_user'
-						)"
-					);
-				}
-			}
-			
-			array_map('unlink', glob('./assets/tmp_file/*.xls'));
-			array_map('unlink', glob('./assets/tmp_file/*.xlsx'));
-			
-			$this->session->set_flashdata('message', '<div class="alert for-alert alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Import data successfully !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			redirect('user');
-		}
-	}
-	
-	public function export()
-    {
-        $data['title'] = 'User Database';
-		$data['user'] = $this->ModelMaster->getAll('user')->result_array();
-
-        $this->load->view('user/export', $data);
     }
 }

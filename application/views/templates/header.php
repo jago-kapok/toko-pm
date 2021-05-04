@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="<?= base_url('assets/'); ?>plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url('assets/'); ?>dist/css/adminlte.min.css">
+  <!-- jQuery -->
+  <script src="<?= base_url('assets/'); ?>plugins/jquery/jquery.min.js"></script>
+  <!-- JQuery UI -->
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>dist/css/jquery-ui.css">
   <!-- Google Font: Source Sans Pro -->
   <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
   
@@ -33,7 +37,14 @@
 	.nav-sidebar .nav-item > .nav-link { color: white }
 	[class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link { color: white }
 	.btn.btn-xs { width: 2em }
-	select#pagelength { border-radius: 0 .2em .2em 0;
+	select#pagelength { border-radius: 0 .2em .2em 0 }
+	.table td, .table th { padding: 5px 10px }
+	.table th { text-align: center }
+	.card-header { padding: .5rem 1.25rem }
+	.card-title { font-size: 15px; font-weight: bold }
+	.text-center { text-align: center }
+	.number { text-align: right }
+	input.input-readonly { border: none; outline: none; width: 100% }
   </style>
 </head>
 
@@ -82,7 +93,10 @@
         alt="Meter Monitoring"
         class="brand-image img-circle elevation-3"
         style="opacity: .8">
-      <span class="brand-text font-weight-light">&nbsp;&nbsp;Pandu Mulya</span>
+      <span class="brand-text font-weight-light"><img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" style="width: 70%;
+		padding-left: 5%;
+		margin-top: -3%;">
+	  </span>
     </a>
 	
 	<div class="sidebar">
@@ -122,7 +136,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Pelanggan</p>
                 </a>
@@ -152,7 +166,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Data Penawaran</p>
                 </a>
@@ -170,7 +184,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Data Penjualan</p>
                 </a>
@@ -188,13 +202,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('purchase'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Data Pembelian</p>
                 </a>
               </li>
 			  <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Supplier</p>
                 </a>
@@ -203,7 +217,7 @@
           </li>
 		  
 		  <li class="nav-item">
-            <a href="<?= base_url('/'); ?>" class="nav-link">
+            <a href="<?= base_url('/stock'); ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 &nbsp;&nbsp;Data Stok
@@ -212,7 +226,7 @@
           </li>
 		  
 		  <li class="nav-item">
-            <a href="<?= base_url('/'); ?>" class="nav-link">
+            <a href="<?= base_url('/stockHistory'); ?>" class="nav-link">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 &nbsp;&nbsp;Riwayat Stok
@@ -241,7 +255,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('harmet/setting'); ?>" class="nav-link">
+                <a href="<?= base_url('user'); ?>" class="nav-link">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Manajemen User</p>
                 </a>
@@ -271,9 +285,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('assets/'); ?>format/customer_format.xls" class="nav-link">
+                <a href="<?= base_url('assets/'); ?>format/user_format.xls" class="nav-link">
                   <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Format Import Customer</p>
+                  <p>&nbsp;&nbsp;Format Import user</p>
                 </a>
               </li>
             </ul>
@@ -330,5 +344,5 @@
 	  </div>
 	</div>
   
-  <div class="content-wrapper">
-    <section class="content p-2">
+	<div class="content-wrapper">
+	  <section class="content p-2">

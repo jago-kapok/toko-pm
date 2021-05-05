@@ -136,7 +136,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Pelanggan</p>
                 </a>
@@ -144,7 +144,7 @@
 			  <li class="nav-item">
                 <a href="<?= base_url('item'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Barang</p>
+                  <p>&nbsp;&nbsp;Produk</p>
                 </a>
               </li>
             </ul>
@@ -208,7 +208,7 @@
                 </a>
               </li>
 			  <li class="nav-item">
-                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('supplier'); ?>" class="nav-link ml-5">
                   <i class="fas fa-angle-double-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Supplier</p>
                 </a>

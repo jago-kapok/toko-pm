@@ -56,31 +56,6 @@ class Purchase extends CI_Controller
         $this->load->view('templates/footer');
 		$this->load->view('templates/js/purchase');
     }
-    
-    public function itemData()
-    {
-		$term = $_GET['term'];
-  
-		if(isset($term)){
-			$result = $this->db->like('item_code', $term, 'both')->or_like('item_desc', $term, 'both')->get('item')->result_array();
-			
-			$output = [];
-			if(count($result) > 0){
-				foreach($result as $data){
-					$output[] = array(
-						"item_id"	=> $data['item_id'],
-						"item_code"	=> $data['item_code'],
-						"item_desc"	=> $data['item_desc'],
-						"item_unit"	=> $data['item_unit']
-					);
-				}
-			} else {
-				$output[] = array("item_desc" => "Data tidak ditemukan");
-			}
-			
-			echo json_encode($output);
-		}
-	}
 	
 	public function create1()
 	{

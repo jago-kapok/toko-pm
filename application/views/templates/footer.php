@@ -24,7 +24,24 @@
   <script src="<?= base_url('assets/'); ?>plugins/chart.js/Chart.min.js"></script>
   
   <script>
-  	// Setting DataTable
+	/* ============================ */
+	/* Autocomplete = Off							
+	/* ============================ */
+	$('.form-control').attr('autocomplete','off');
+	
+	/* ============================ */
+	/* Number Only							
+	/* ============================ */
+    $('.number').keypress(function(event){
+	  var charCode = event.keyCode
+	  if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))
+		return false;
+	  return true;
+	});
+	
+  	/* ============================ */
+	/* Simple DataTable							
+	/* ============================ */
     var table = $('#example').DataTable({
 	  "lengthChange": false
 	});
@@ -33,7 +50,9 @@
 	  table.search(this.value).draw();
     });
 	
-	// Mengambil data JSON dari tabel customer berdasar id
+	/* ============================ */
+	/* get JSON							
+	/* ============================ */
 	$('select[name=id_pelanggan]').change(function(){
 	  if(this.value == 'New'){
 		$('input[name=nama_pelanggan]').val('');

@@ -31,7 +31,6 @@ class Category extends CI_Controller
 			$no++;
 			$row					= [];
 			$row["no"]				= $no;
-			$row["category_code"]	= $val->category_code;
 			$row["category_desc"]	= $val->category_desc;
 			$row["action"]			= "	<a href=\"javascript:void(0)\" class=\"btn btn-xs btn-info\" data-toggle=\"modal\" data-target=\"#category_update\"
 				data-category_id=\"".$val->category_id."\"

@@ -25,12 +25,11 @@
   <table id="table_data" class="table table-bordered table-striped" width="100.1%">
 	<thead class="bg-info">
       <tr>
-		<th width="5">No.</th>
-        <th class="w-25">Nama Barang</th>
-        <th class="w-10">Stok Tersedia</th>
-        <th class="w-10">Stok Minimal</th>
-        <th class="w-10">Stok Maksimal</th>
-        <th class="w-25">Terakhir Diperbarui</th>
+		<th width="5">NO.</th>
+        <th class="w-25">NAMA PRODUK</th>
+        <th class="w-10 text-left">STOK TERSEDIA</th>
+        <th class="w-10 text-left">STOK MINIMAL</th>
+        <th class="w-25">TERAKHIR DIPERBARUI</th>
         <th>#</th>
       </tr>
     </thead>
@@ -50,33 +49,27 @@
       <div class="modal-body">
 		<input type="hidden" name="stock_id">
 		<div class="form-row mb-1">
-		  <label class="col-md-4 col-form-label">Nama Barang</label>
+		  <label class="col-md-4 col-form-label">Nama Produk</label>
 		  <div class="col-md-8">
 		    <input name="item_desc" class="form-control form-control-sm" readonly>
 		  </div>
 		</div>
 		<div class="form-row">
 		  <label class="col-md-4 col-form-label">Stok Tersedia <span class="text-danger">*</span></label>
-		  <div class="col-md-3">
-		    <input name="stock_exist" class="form-control form-control-sm" required>
+		  <div class="col-md-2">
+		    <input name="stock_exist" class="form-control form-control-sm number" required>
 		  </div>
 		</div>
 		<div class="form-row mb-1">
 		  <label class="col-md-4 col-form-label">Stok Minimal <span class="text-danger">*</span></label>
-		  <div class="col-md-3">
-		    <input name="stock_min" class="form-control form-control-sm" required>
-		  </div>
-		</div>
-		<div class="form-row mb-1">
-		  <label class="col-md-4 col-form-label">Stok Maksimal <span class="text-danger">*</span></label>
-		  <div class="col-md-3">
-		    <input name="stock_max" class="form-control form-control-sm" required>
+		  <div class="col-md-2">
+		    <input name="stock_min" class="form-control form-control-sm number" required>
 		  </div>
 		</div>
 	  </div>
       <div class="modal-footer">
 	    <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Simpan</button>
       </div>
 	  </form>

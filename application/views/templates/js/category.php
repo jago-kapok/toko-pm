@@ -20,7 +20,6 @@ var table = $("table#table_data").DataTable({
   iDisplayLength: 10,
   columns	: [
 	{data: "no",			className: "text-left", orderable: false},
-	{data: "category_code",	className: "text-left"},
 	{data: "category_desc",	className: "text-left"},
 	{data: "action",		className: "text-left", orderable: false}
   ],

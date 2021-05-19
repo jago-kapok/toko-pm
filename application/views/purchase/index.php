@@ -25,12 +25,12 @@
   <table id="table_data" class="table table-bordered table-striped" width="100.1%">
 	<thead class="bg-info">
       <tr>
-		<th width="5">No.</th>
-        <th class="w-10">Tanggal Transaksi</th>
-        <th class="w-25">No. Transaksi</th>
-        <th class="w-25">Supplier</th>
-        <th class="w-25">Total</th>
-        <th>#</th>
+		<th width="5">NO.</th>
+        <th>TANGGAL</th>
+        <th>TRANSAKSI</th>
+        <th>SUPPLIER</th>
+        <th class="text-left">TOTAL (Rp)</th>
+        <th width="50">#</th>
       </tr>
     </thead>
   </table>

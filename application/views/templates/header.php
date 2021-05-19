@@ -35,7 +35,7 @@
 	.alert-success { color:#155724; background-color:#d4edda; border-color:#c3e6cb }
 	.alert-danger { color:#571515; background-color:#edd4d4; border-color:#e6c3c3 }
 	.nav-sidebar .nav-item > .nav-link { color: white }
-	[class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link { color: white }
+	.nav-treeview .nav-item > .nav-link { margin-left: 35px !important }
 	.btn.btn-xs { width: 2em }
 	select#pagelength { border-radius: 0 .2em .2em 0 }
 	.table td, .table th { padding: 5px 10px }
@@ -43,8 +43,11 @@
 	.card-header { padding: .5rem 1.25rem }
 	.card-title { font-size: 15px; font-weight: bold }
 	.text-center { text-align: center }
+	.text-left { text-align: left !important }
 	.number { text-align: right }
 	input.input-readonly { border: none; outline: none; width: 100% }
+	input.input-outline { width: 100% }
+	.bg-other { background-color: #f4f6f9 } #e9ecef
   </style>
 </head>
 
@@ -90,10 +93,10 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background: #5f676e">
     <a href="javascript:void(0)" class="brand-link" style="border-bottom: 1px solid; background-color: #5f676e">
       <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo.png"
-        alt="Meter Monitoring"
+        alt="Pandu Mulya"
         class="brand-image img-circle elevation-3"
         style="opacity: .8">
-      <span class="brand-text font-weight-light"><img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" style="width: 70%;
+      <span class="brand-text font-weight-light"><img src="<?= base_url('assets/'); ?>dist/img/logo.png" style="width: 70%;
 		padding-left: 5%;
 		margin-top: -3%;">
 	  </span>
@@ -113,7 +116,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 		  <li class="nav-item">
-            <a href="<?= base_url('/'); ?>" class="nav-link">
+            <a href="<?= base_url('/'); ?>" class="nav-link" style="color:#bfd6f7">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 &nbsp;&nbsp;Dashboard
@@ -121,8 +124,8 @@
             </a>
           </li>
 		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
+            <a href="#" class="nav-link" style="color:#f7bfbf">
+              <i class="nav-icon fas fa-table"></i>
               <p>
                 &nbsp;&nbsp;Data Master
                 <i class="right fas fa-angle-left"></i>
@@ -131,19 +134,19 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="<?= base_url('category'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Kategori</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Pelanggan</p>
                 </a>
               </li>
 			  <li class="nav-item">
                 <a href="<?= base_url('item'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Produk</p>
                 </a>
               </li>
@@ -151,7 +154,7 @@
           </li>
 		  
 		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="<?= base_url('quotation'); ?>" class="nav-link" style="color:#f7e8bf">
               <i class="nav-icon fas fa-file"></i>
               <p>
                 &nbsp;&nbsp;Penawaran
@@ -160,14 +163,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('category'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Penawaran Baru</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                <a href="<?= base_url('quotation'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Data Penawaran</p>
                 </a>
               </li>
@@ -175,26 +172,32 @@
           </li>
 		  
 		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
+            <a href="#" class="nav-link" style="color:#bff7c1">
+              <i class="nav-icon fas fa-file-invoice"></i>
               <p>
                 &nbsp;&nbsp;Penjualan
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url('user'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+			  <li class="nav-item">
+                <a href="<?= base_url('invoice'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Data Penjualan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('invoice'); ?>" class="nav-link ml-5">
+                  <i class="fas fa-caret-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Penjualan Baru</p>
                 </a>
               </li>
             </ul>
           </li>
 		  
 		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
+            <a href="#" class="nav-link" style="color:#bfd6f7">
+              <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
                 &nbsp;&nbsp;Pembelian
                 <i class="right fas fa-angle-left"></i>
@@ -203,13 +206,13 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="<?= base_url('purchase'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Data Pembelian</p>
                 </a>
               </li>
 			  <li class="nav-item">
                 <a href="<?= base_url('supplier'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Supplier</p>
                 </a>
               </li>
@@ -217,8 +220,8 @@
           </li>
 		  
 		  <li class="nav-item">
-            <a href="<?= base_url('/stock'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="<?= base_url('/stock'); ?>" class="nav-link" style="color:#f7bfbf">
+              <i class="nav-icon fas fa-layer-group"></i>
               <p>
                 &nbsp;&nbsp;Data Stok
               </p>
@@ -226,7 +229,7 @@
           </li>
 		  
 		  <li class="nav-item">
-            <a href="<?= base_url('/stockHistory'); ?>" class="nav-link">
+            <a href="<?= base_url('/stockHistory'); ?>" class="nav-link" style="color:#f7e8bf">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 &nbsp;&nbsp;Riwayat Stok
@@ -235,8 +238,8 @@
           </li>
 		  
 		  <li class="nav-item">
-            <a href="<?= base_url('/'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-history"></i>
+            <a href="<?= base_url('/'); ?>" class="nav-link" style="color:#bff7c1">
+              <i class="nav-icon fas fa-copy"></i>
               <p>
                 &nbsp;&nbsp;Laporan
               </p>
@@ -256,38 +259,14 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="<?= base_url('user'); ?>" class="nav-link">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Manajemen User</p>
                 </a>
               </li>
 			  <li class="nav-item">
                 <a href="<?= base_url('harmet/setting'); ?>" class="nav-link">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Profil Usaha</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-download"></i>
-              <p>
-                &nbsp;&nbsp;Download Format
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url('assets/'); ?>format/user_format.xls" class="nav-link">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Format Import User</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= base_url('assets/'); ?>format/user_format.xls" class="nav-link">
-                  <i class="fas fa-angle-double-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Format Import user</p>
                 </a>
               </li>
             </ul>

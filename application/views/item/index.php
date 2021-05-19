@@ -25,14 +25,14 @@
   <table id="table_data" class="table table-bordered table-striped" width="100.1%">
 	<thead class="bg-info">
       <tr>
-		<th width="5">No.</th>
-        <th class="w-10">Kode</th>
-        <th class="w-10">Kategori</th>
-        <th class="w-25">Deskripsi</th>
-        <th class="w-10">Satuan</th>
-        <th class="w-10" style="text-align:left !important">Harga Jual</th>
-        <th class="w-15">Supplier</th>
-        <th>#</th>
+		<th width="5%">NO.</th>
+        <th width="5%">KODE</th>
+        <th width="10%">KATEGORI</th>
+        <th width="30%">DESKRIPSI</th>
+        <th width="5%">SATUAN</th>
+        <th width="15%" class="text-left">HARGA JUAL (Rp)</th>
+        <th width="20%">SUPPLIER</th>
+        <th width="10%">#</th>
       </tr>
     </thead>
   </table>
@@ -42,7 +42,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h5 class="modal-title">Produk Baru</h5>
+        <h5 class="modal-title">Tambah Produk</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span>&times;</span>
         </button>
@@ -104,7 +104,7 @@
 	  </div>
       <div class="modal-footer">
 	    <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Simpan</button>
       </div>
 	  </form>
@@ -116,7 +116,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h5 class="modal-title">Ubah Produk</h5>
+        <h5 class="modal-title">Edit Produk</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span>&times;</span>
         </button>
@@ -179,7 +179,7 @@
 	  </div>
       <div class="modal-footer">
 	    <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Simpan</button>
       </div>
 	  </form>

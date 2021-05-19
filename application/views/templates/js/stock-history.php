@@ -21,9 +21,9 @@ var table = $("table#table_data").DataTable({
   columns: [
 	{data: null,						className: "text-left"},
 	{data: "stock_history_date",		className: "text-left"},
-	{data: "stock_history_type",		className: "text-left"},
+	{data: "stock_history_category_desc",className: "text-left"},
 	{data: "stock_history_number",		className: "text-left"},
-	{data: "stock_history_item_desc",	className: "text-left"},
+	{data: "item_desc",					className: "text-left"},
 	{data: "stock_history_item_qty",	className: "text-right"}
   ],
   order: [[ 1, "DESC"]],

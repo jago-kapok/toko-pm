@@ -1,34 +1,35 @@
 <form action="<?= base_url('purchase/create'); ?>" class="container-fluid mt-2" method="POST">
+  <input type="hidden" name="purchase_id" value="<?php echo $purchase->purchase_id ?>">
   <div class="mb-1">
 	<div class="form-row mb-1">
 	  <label class="col-md-1 col-form-label">No. Transaksi</label>
 	  <div class="col-md-2">
-		<input name="purchase_number" class="form-control form-control-sm" required>
+		<input name="purchase_number" class="form-control form-control-sm" value="<?php echo $purchase->purchase_number ?>" readonly>
 	  </div>
 	  <label class="col-md-1 offset-md-5 col-form-label">Nama</label>
-	  <label id="supplier_name" class="col-md-2 col-form-label">:</label>
+	  <label id="supplier_name" class="col-md-2 col-form-label">: <?php echo $supplier->supplier_name ?></label>
 	</div>
 	<div class="form-row mb-1">
 	  <label class="col-md-1 col-form-label">Tanggal <span class="text-danger">*</span></label>
 	  <div class="col-md-2">
-		<input type="date" name="purchase_date" class="form-control form-control-sm" value="<?php echo date('Y-m-d') ?>" required>
+		<input type="date" name="purchase_date" class="form-control form-control-sm" value="<?php echo date('Y-m-d', strtotime($purchase->purchase_date)) ?>" required>
 	  </div>
 	  <label class="col-md-1 offset-md-5 col-form-label">Alamat</label>
-	  <label id="supplier_address" class="col-md-2 col-form-label">:</label>
+	  <label id="supplier_address" class="col-md-2 col-form-label">: <?php echo $supplier->supplier_address ?></label>
 	</div>
 	<div class="form-row mb-1">
 	  <label class="col-md-1 col-form-label">Supplier <span class="text-danger">*</span></label>
 	  <div class="col-md-2">
-		<input type="hidden" id="supplier_id" name="supplier_id">
+		<input type="hidden" id="supplier_id" name="supplier_id" value="<?php echo $supplier->supplier_id ?>">
 		<div class="input-group input-group-sm">
-		  <input id="supplier_code" class="form-control form-control-sm" required>
+		  <input id="supplier_code" class="form-control form-control-sm" value="<?php echo $supplier->supplier_code ?>" readonly required>
 		  <div class="input-group-append">
 			<button type="button" id="supplier_clear" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
 		  </div>
 		</div>
 	  </div>
 	  <label class="col-md-1 offset-md-5 col-form-label">No. Telepon</label>
-	  <label id="supplier_phone" class="col-md-2 col-form-label">:</label>
+	  <label id="supplier_phone" class="col-md-2 col-form-label">: <?php echo $supplier->supplier_phone ?></label>
 	</div>
   </div>
   <hr>
@@ -97,12 +98,28 @@
 				<th width="5%">#</th>
 			  </tr>
 			</thead>
+			<tbody>
+			  <?php foreach($purchase_detail AS $key => $row) { ?>
+				<tr id="details<?php echo $key ?>">
+				  <td>
+				    <input type="hidden" name="detail_item_id[]" value="<?php echo $row->detail_item_id ?>">
+					<input name="detail_item_code[]" class="input-readonly" value="<?php echo $row->detail_item_code ?>" readonly>
+				  </td>
+				  <td><input name="detail_item_desc[]" class="input-readonly" value="<?php echo $row->detail_item_desc ?>" readonly></td>
+				  <td><input name="detail_item_qty[]" class="input-readonly number" value="<?php echo $row->detail_item_qty ?>" readonly></td>
+				  <td><input name="detail_item_unit[]" class="input-readonly" value="<?php echo $row->detail_item_unit ?>" readonly></td>
+				  <td><input name="detail_item_price[]" class="input-readonly number" value="<?php echo $row->detail_item_price ?>" readonly></td>
+				  <td><input class="input-readonly number total" value="<?php echo ($row->detail_item_qty * $row->detail_item_price) ?>" readonly></td>
+				  <th width="5%"><button id="details<?php echo $key ?>" type="button" class="btn btn-xs btn-danger" onclick="removeItem(this.id)"><i class="fa fa-trash"></i></button></th>
+				</tr>
+			  <?php } ?>
+			</tbody>
 			<tbody id="item_detail"></tbody>
 			<tfoot>
 			  <tr class="bg-other">
 				<td colspan="5" align="right"><b>TOTAL PEMBELIAN (Rp)</b></td>
 				<td>
-				  <input id="purchase_total" name="purchase_total" class="input-readonly number bg-other" style="font-weight:bold" readonly>
+				  <input id="purchase_total" name="purchase_total" class="input-readonly number bg-other" style="font-weight:bold" value="<?php echo $purchase->purchase_total ?>" readonly>
 				</td>
 				<td></td>
 			  </tr>

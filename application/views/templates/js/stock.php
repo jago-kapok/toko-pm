@@ -23,12 +23,11 @@ var table = $("table#table_data").DataTable({
 	{data: "item_desc",			className: "text-left"},
 	{data: "stock_exist",		className: "text-right"},
 	{data: "stock_min",			className: "text-right"},
-	{data: "stock_max",			className: "text-right"},
 	{data: "stock_updated_date",className: "text-left"},
 	{
 	  data: "stock_id",
 	  render: function(data, type, row){
-		return '<a href="javascript:void(0)" class="btn btn-info btn-xs fa fa-edit" data-toggle="modal" data-target="#stock_update" data-stock_id="' + data + '" data-item_desc="' + row.item_desc + '" data-stock_min="' + row.stock_min + '" data-stock_max="' + row.stock_max + '" data-stock_exist="' + row.stock_exist + '"></a>';
+		return '<a href="javascript:void(0)" class="btn btn-info btn-xs fa fa-edit" data-toggle="modal" data-target="#stock_update" data-stock_id="' + data + '" data-item_desc="' + row.item_desc + '" data-stock_min="' + row.stock_min + '" data-stock_exist="' + row.stock_exist + '"></a>';
 	  }
 	}
 	
@@ -56,14 +55,12 @@ $('#stock_update').on('show.bs.modal', function(event){
   var stock_id		= button.data('stock_id');
   var item_desc		= button.data('item_desc');
   var stock_min		= button.data('stock_min');
-  var stock_max		= button.data('stock_max');
   var stock_exist	= button.data('stock_exist');
   
   var modal = $(this);
   modal.find('.modal-body input[name=stock_id]').val(stock_id);
   modal.find('.modal-body input[name=item_desc]').val(item_desc);
   modal.find('.modal-body input[name=stock_min]').val(stock_min);
-  modal.find('.modal-body input[name=stock_max]').val(stock_max);
   modal.find('.modal-body input[name=stock_exist]').val(stock_exist);
 });
 </script>

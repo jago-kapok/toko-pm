@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2021 at 05:33 PM
+-- Generation Time: May 19, 2021 at 06:25 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -39,9 +39,8 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`category_id`, `category_code`, `category_desc`) VALUES
-(1, 1, 'ITEM'),
-(2, 0, 'SERVICES'),
-(10, NULL, 'OKES');
+(1, 1, 'Barang'),
+(2, 0, 'Jasa');
 
 -- --------------------------------------------------------
 
@@ -62,8 +61,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_code`, `customer_name`, `customer_address`, `customer_phone`) VALUES
-(1, 'C001', 'Name', 'Address', '12345'),
-(3, 'C002', 'Naruto', 'Konoha', '1111');
+(1, 'C001', 'Tsubasa', 'Nankatsu', '111111111111'),
+(3, 'C002', 'Naruto', 'Konoha', '222222222222');
 
 -- --------------------------------------------------------
 
@@ -123,9 +122,33 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`item_id`, `category_id`, `item_code`, `item_desc`, `item_unit`, `item_buy`, `item_price`, `supplier_id`) VALUES
-(1, 1, 'B001', 'Barang', 'kg', 1000, NULL, NULL),
-(2, 1, 'B002', 'Barang 2', 'g', 500, NULL, 1),
-(3, 2, 'B003', 'Service', '-', 0, 0, NULL);
+(1, 1, 'B001', 'Beras', 'kg', 10000, 11000, NULL),
+(2, 1, 'B002', 'Sabun', 'g', 500, 1000, 1),
+(3, 2, 'B003', 'Service', '-', 0, 25000, NULL),
+(4, 1, 'B004', 'Sabun Cuci 1 kg', 'kg', 12500, 15000, 1),
+(5, 1, 'B005', 'Telur', 'g', 500, 1000, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `item_master`
+-- (See below for the actual view)
+--
+CREATE TABLE `item_master` (
+`item_id` int(11)
+,`category_id` int(11)
+,`item_code` char(10)
+,`item_desc` varchar(150)
+,`item_unit` char(5)
+,`item_buy` int(11)
+,`item_price` int(11)
+,`supplier_id` int(11)
+,`category_desc` varchar(50)
+,`supplier_code` char(10)
+,`supplier_name` varchar(50)
+,`supplier_address` varchar(150)
+,`supplier_phone` varchar(15)
+);
 
 -- --------------------------------------------------------
 
@@ -159,9 +182,21 @@ CREATE TABLE `purchase` (
   `supplier_id` int(11) DEFAULT NULL,
   `purchase_total` int(11) DEFAULT NULL,
   `purchase_notes` varchar(200) DEFAULT NULL,
+  `purchase_status` int(11) DEFAULT NULL,
   `purchase_created_by` int(11) DEFAULT NULL,
-  `purchase_created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `purchase_created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `purchase_modified_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchase`
+--
+
+INSERT INTO `purchase` (`purchase_id`, `purchase_number`, `purchase_date`, `supplier_id`, `purchase_total`, `purchase_notes`, `purchase_status`, `purchase_created_by`, `purchase_created_date`, `purchase_modified_date`) VALUES
+(3, 'PO/V-2021/001', '2021-05-07 00:00:00', 1, 180000, NULL, NULL, NULL, '2021-05-06 15:25:26', '2021-05-16 07:37:33'),
+(4, 'PO/V-2021/002', '2021-05-06 00:00:00', 3, 90000, NULL, NULL, NULL, '2021-05-06 15:27:12', NULL),
+(6, 'PO/V-2021/003', '2021-05-16 00:00:00', 1, 262500, NULL, NULL, NULL, '2021-05-06 15:30:07', NULL),
+(33, '11111', '2021-05-19 00:00:00', 3, 50000, NULL, 1, NULL, '2021-05-19 16:24:22', '2021-05-19 23:25:11');
 
 -- --------------------------------------------------------
 
@@ -180,6 +215,14 @@ CREATE TABLE `purchase_detail` (
   `detail_item_price` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `purchase_detail`
+--
+
+INSERT INTO `purchase_detail` (`detail_id`, `purchase_id`, `detail_item_id`, `detail_item_code`, `detail_item_desc`, `detail_item_qty`, `detail_item_unit`, `detail_item_price`) VALUES
+(4, 33, 1, 'B001', 'Beras', 5, 'kg', 8000),
+(5, 33, 5, 'B005', 'Telur', 20, 'g', 500);
+
 -- --------------------------------------------------------
 
 --
@@ -191,11 +234,23 @@ CREATE TABLE `quotation` (
   `quotation_number` char(15) DEFAULT NULL,
   `quotation_date` datetime DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
+  `customer_desc` varchar(50) DEFAULT NULL,
   `quotation_total` int(11) DEFAULT NULL,
+  `quotation_notes` varchar(200) DEFAULT NULL,
   `quotation_status` int(11) DEFAULT NULL,
   `quotation_created_by` int(11) DEFAULT NULL,
-  `quotation_created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `quotation_created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `quotation_modified_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `quotation`
+--
+
+INSERT INTO `quotation` (`quotation_id`, `quotation_number`, `quotation_date`, `customer_id`, `customer_desc`, `quotation_total`, `quotation_notes`, `quotation_status`, `quotation_created_by`, `quotation_created_date`, `quotation_modified_date`) VALUES
+(2, 'SQ/05-21/00001', '2021-05-16 00:00:00', 3, 'Naruto', 48000, NULL, 1, NULL, '2021-05-16 01:59:42', '2021-05-16 07:10:28'),
+(3, 'SQ/05-21/00002', '2021-05-16 00:00:00', 1, 'Tsubasa', 22000, 'Cash', 1, NULL, '2021-05-16 02:18:01', '2021-05-16 04:18:01'),
+(4, 'SQ/05-21/00003', '2021-05-16 00:00:00', 0, 'Hyuga', 33000, 'Cash', 1, NULL, '2021-05-16 02:18:22', '2021-05-16 04:18:22');
 
 -- --------------------------------------------------------
 
@@ -211,8 +266,20 @@ CREATE TABLE `quotation_detail` (
   `detail_item_desc` varchar(150) DEFAULT NULL,
   `detail_item_qty` int(11) DEFAULT NULL,
   `detail_item_unit` char(5) DEFAULT NULL,
-  `detail_item_price` int(11) DEFAULT NULL
+  `detail_item_price` int(11) DEFAULT NULL,
+  `detail_item_buy` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `quotation_detail`
+--
+
+INSERT INTO `quotation_detail` (`detail_id`, `quotation_id`, `detail_item_id`, `detail_item_code`, `detail_item_desc`, `detail_item_qty`, `detail_item_unit`, `detail_item_price`, `detail_item_buy`) VALUES
+(5, 3, 1, 'B001', 'Beras', 2, 'kg', 11000, 10000),
+(6, 4, 1, 'B001', 'Beras', 3, 'kg', 11000, 10000),
+(19, 2, 2, 'B002', 'Sabun', 2, 'g', 1000, NULL),
+(20, 2, 4, 'B004', 'Sabun Cuci 1 kg', 3, 'kg', 15000, NULL),
+(21, 2, 2, 'B002', 'Sabun', 1, 'g', 1000, NULL);
 
 -- --------------------------------------------------------
 
@@ -260,8 +327,19 @@ CREATE TABLE `stock` (
   `stock_max` int(11) DEFAULT NULL,
   `stock_exist` int(11) DEFAULT NULL,
   `stock_updated_id` int(11) DEFAULT NULL,
-  `stock_updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `stock_updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`stock_id`, `item_id`, `stock_min`, `stock_max`, `stock_exist`, `stock_updated_id`, `stock_updated_date`) VALUES
+(1, 1, 1, 10, 5, NULL, '2021-05-19 16:25:22'),
+(2, 2, 1, 10, 5, NULL, '2021-05-19 16:23:14'),
+(3, 3, 1, 10, 5, NULL, '2021-05-07 14:45:15'),
+(4, 4, 1, 10, 5, NULL, '2021-05-19 16:23:18'),
+(5, 5, 1, 10, 5, NULL, '2021-05-19 16:25:23');
 
 -- --------------------------------------------------------
 
@@ -272,8 +350,6 @@ CREATE TABLE `stock` (
 CREATE TABLE `stock_history` (
   `stock_history_id` int(11) NOT NULL,
   `item_id` int(11) DEFAULT NULL,
-  `stock_history_item_code` char(10) DEFAULT NULL,
-  `stock_history_item_desc` varchar(150) DEFAULT NULL,
   `stock_history_item_qty` int(11) DEFAULT NULL,
   `stock_history_number` char(15) DEFAULT NULL,
   `stock_history_type` int(11) DEFAULT NULL,
@@ -296,9 +372,9 @@ CREATE TABLE `stock_history_category` (
 --
 
 INSERT INTO `stock_history_category` (`stock_history_category_id`, `stock_history_category_desc`) VALUES
-(1, 'QUOTATION'),
+(1, 'PURCHASE'),
 (2, 'INVOICE'),
-(3, 'PURCHASE');
+(3, NULL);
 
 -- --------------------------------------------------------
 
@@ -319,8 +395,8 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`supplier_id`, `supplier_code`, `supplier_name`, `supplier_address`, `supplier_phone`) VALUES
-(1, 'S001', 'Supplier', 'Alamat', '12345'),
-(3, 'S002', 'PT. SUPPLIER', 'Surabaya', '0852');
+(1, 'S001', 'Maju Raya', 'Gresik', '085208520852'),
+(3, 'S002', 'Berdikari', 'Surabaya', '085608560856');
 
 -- --------------------------------------------------------
 
@@ -345,6 +421,15 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `user_code`, `user_fullname`, `user_name`, `user_password`, `user_address`, `user_phone`, `user_level`) VALUES
 (1, 'U-001', 'Administrator', 'admin', '21232f297a57a5a743894a0e4a801fc3', '-', '-', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `item_master`
+--
+DROP TABLE IF EXISTS `item_master`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `item_master`  AS  select `i`.`item_id` AS `item_id`,`i`.`category_id` AS `category_id`,`i`.`item_code` AS `item_code`,`i`.`item_desc` AS `item_desc`,`i`.`item_unit` AS `item_unit`,`i`.`item_buy` AS `item_buy`,`i`.`item_price` AS `item_price`,`i`.`supplier_id` AS `supplier_id`,`c`.`category_desc` AS `category_desc`,`s`.`supplier_code` AS `supplier_code`,`s`.`supplier_name` AS `supplier_name`,`s`.`supplier_address` AS `supplier_address`,`s`.`supplier_phone` AS `supplier_phone` from ((`item` `i` join `category` `c` on((`i`.`category_id` = `c`.`category_id`))) left join `supplier` `s` on((`i`.`supplier_id` = `s`.`supplier_id`))) ;
 
 --
 -- Indexes for dumped tables
@@ -460,7 +545,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -484,7 +569,7 @@ ALTER TABLE `invoice_detail`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `level`
@@ -496,25 +581,25 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `purchase_detail`
 --
 ALTER TABLE `purchase_detail`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `quotation`
 --
 ALTER TABLE `quotation`
-  MODIFY `quotation_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `quotation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `quotation_detail`
 --
 ALTER TABLE `quotation_detail`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `setting`
@@ -532,13 +617,13 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `stock_history`
 --
 ALTER TABLE `stock_history`
-  MODIFY `stock_history_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stock_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `stock_history_category`

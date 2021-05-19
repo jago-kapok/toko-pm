@@ -1,6 +1,10 @@
 <div class="mt-2">
+  <?= $this->session->flashdata('message'); ?>
   <div class="row mb-1">
 	<div class="col-md-8">
+	  <a href="quotation/formCreate" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>
+	    &nbsp;&nbsp;Tambah
+	  </a>
 	</div>
 	<div class="col-md-4 pull-right">
 	  <div class="input-group">
@@ -22,11 +26,12 @@
 	<thead class="bg-info">
       <tr>
 		<th width="5">NO.</th>
-		<th class="w-10">TANGGAL</th>
-		<th class="w-10">JENIS TRANSAKSI</th>
-		<th class="w-10">NO. TRANSAKSI</th>
-        <th class="w-25">NAMA PRODUK</th>
-        <th width="10">QTY</th>
+        <th>TANGGAL</th>
+        <th>PENAWARAN</th>
+        <th>PELANGGAN</th>
+        <th class="text-left">TOTAL (Rp)</th>
+        <th>STATUS</th>
+        <th width="50" class="text-left">#</th>
       </tr>
     </thead>
   </table>

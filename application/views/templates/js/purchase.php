@@ -23,15 +23,16 @@ var table = $("table#table_data").DataTable({
 	{data: "purchase_date",		className: "text-left"},
 	{data: "purchase_number",	className: "text-left"},
 	{data: "supplier_name",		className: "text-left"},
-	{data: "purchase_total",	className: "text-left"},
+	{data: "purchase_total",	className: "text-right"},
 	{
 	  data: "purchase_id",
 	  render: function(data, type, row){
-		return '<a href="javascript:void(0)" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="customer/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Hapus data ini ?\')"><i class="fa fa-trash"></i></a>';
+		return '<a href="purchase/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="purchase/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus transaksi ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
 	
   ],
+  order: [[1, "DESC"]],
   rowCallback: function(row, data, iDisplayIndex){
 	var info 	= this.fnPagingInfo();
 	var page 	= info.iPage;
@@ -64,6 +65,7 @@ $("#supplier_code").autocomplete({
     $("#supplier_phone").text(": " + ui.item.supplier_phone);
 	
 	$("#supplier_code").attr("readonly", true);
+	$("#item_code").focus();
       return false;
   }
 }).each(function(){
@@ -118,6 +120,10 @@ $("#supplier_clear").click(function(){
 /* ============================ */
 
 $("#item_clear").click(function(){
+  $("#item_code").val("");
+  $("#item_desc").val("");
+  $("#item_price").val("");
+  $("#item_qty").val("");
   $("#item_unit").empty();
   $("#item_code").attr('readonly', false);
   $("#item_code").focus();
@@ -131,15 +137,13 @@ var no = 0;
 
 $("#item_add").click(function(){
   no++;
+  let item_id		= $("#item_id").val();
   let item_code		= $("#item_code").val();
   let item_desc		= $("#item_desc").val();
   let item_price	= $("#item_price").val();
   let item_qty		= $("#item_qty").val();
   let item_unit		= $("#item_unit").text();
   let item_total	= item_qty * item_price;
-  
-  let item_total_temp	= $("#item_total_temp").val();
-  let item_grand_total	= parseInt(item_total_temp) + parseInt(item_total);
   
   if(item_code != ''){
 	if(item_price == ''){
@@ -150,17 +154,16 @@ $("#item_add").click(function(){
 	  } else {
 		$("#item_detail").append("<tr id='detail" + no + "'></tr>");
 		$("#detail" + no)
-		  .append("<td><input name='item_code[" + no + "]' class='input-readonly' value='" + item_code + "'></td>")
-		  .append("<td><input name='item_desc[" + no + "]' class='input-readonly' value='" + item_desc + "'></td>")
-		  .append("<td><input name='item_qty[" + no + "]' class='input-readonly number' value='" + item_qty + "'></td>")
-		  .append("<td><input name='item_unit[" + no + "]' class='input-readonly' value='" + item_unit + "'></td>")
-		  .append("<td><input name='item_price[" + no + "]' class='input-readonly number' value='" + item_price + "'></td>")
-		  .append("<td><input name='item_total[" + no + "]' class='input-readonly number' value='" + item_total + "'></td>")
+		  .append("<td><input type='hidden' name='detail_item_id[]' value='" + item_id + "'><input name='detail_item_code[]' class='input-readonly' value='" + item_code + "' readonly></td>")
+		  .append("<td><input name='detail_item_desc[]' class='input-readonly' value='" + item_desc + "' readonly></td>")
+		  .append("<td><input name='detail_item_qty[]' class='input-readonly number' value='" + item_qty + "' readonly></td>")
+		  .append("<td><input name='detail_item_unit[]' class='input-readonly' value='" + item_unit + "' readonly></td>")
+		  .append("<td><input name='detail_item_price[]' class='input-readonly number' value='" + item_price + "' readonly></td>")
+		  .append("<td><input class='input-readonly number total' value='" + item_total + "' readonly></td>")
 		  .append("<td><button id='detail" + no + "' type='button' class='btn btn-xs btn-danger' onclick='removeItem(this.id)'><i class='fa fa-trash'></i></button></td>");
 		  
 		  $("#item_clear").click();
-		  $("#item_total_temp").val(item_grand_total);
-		  $("#item_grand_total").text(item_grand_total);
+		  sumTotal();
 	  }
 	}
   } else {
@@ -174,5 +177,18 @@ $("#item_add").click(function(){
 
 function removeItem(id){
   $("#" + id).remove();
+  sumTotal();
+}
+
+/* ============================ */
+/* Item	SUM						
+/* ============================ */
+
+function sumTotal(){
+  var sum = 0;
+  $(".total").each(function(){
+    sum += +$(this).val();
+  });
+  $("#purchase_total").val(sum);
 }
 </script>

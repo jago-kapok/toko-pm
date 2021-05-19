@@ -36,7 +36,6 @@ class Stock extends CI_Controller
 			["db" => "item_desc",			"dt" => "item_desc"],
 			["db" => "stock_exist",			"dt" => "stock_exist"],
 			["db" => "stock_min",			"dt" => "stock_min"],
-			["db" => "stock_max",			"dt" => "stock_max"],
 			["db" => "stock_updated_date",	"dt" => "stock_updated_date"],
 			["db" => "stock_id",			"dt" => "stock_id"],
 		];
@@ -54,7 +53,6 @@ class Stock extends CI_Controller
 		$stock_id			= $this->input->post('stock_id');
 		$item_desc			= $this->input->post('item_desc');
 		$stock_min			= $this->input->post('stock_min');
-		$stock_max			= $this->input->post('stock_max');
 		$stock_exist		= $this->input->post('stock_exist');
 		$stock_updated_date	= date("Y-m-d H:i:s");
 		

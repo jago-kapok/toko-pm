@@ -114,4 +114,28 @@ class Customer extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data '.strtoupper($row->customer_code).' berhasil dihapus !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('customer');
     }
+	
+	public function findData()
+    {
+		$term = $_GET['term'];
+  
+		if(isset($term)){
+			$result = $this->db->like('customer_code', $term, 'both')->or_like('customer_name', $term, 'both')->get('customer')->result_array();
+			
+			$output = [];
+			if(count($result) > 0){
+				foreach($result as $data){
+					$output[] = array(
+						"customer_id"		=> $data['customer_id'],
+						"customer_code"		=> $data['customer_code'],
+						"customer_name"		=> $data['customer_name'],
+						"customer_address"	=> $data['customer_address'],
+						"customer_phone"	=> $data['customer_phone']
+					);
+				}
+			}
+			
+			echo json_encode($output);
+		}
+	}
 }

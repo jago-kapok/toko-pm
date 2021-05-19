@@ -21,11 +21,11 @@ var table = $("table#table_data").DataTable({
   columns: [
 	{data: null,			className: "text-left"},
 	{data: "item_code",		className: "text-left"},
-	{data: "category_id",	className: "text-left"},
+	{data: "category_desc",	className: "text-left"},
 	{data: "item_desc",		className: "text-left"},
 	{data: "item_unit",		className: "text-left"},
 	{data: "item_price",	className: "text-right"},
-	{data: "supplier_id",	className: "text-left"},
+	{data: "supplier_name",	className: "text-left"},
 	{
 	  data: "item_id",
 	  render: function(data, type, row){

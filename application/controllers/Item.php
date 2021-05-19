@@ -25,7 +25,7 @@ class Item extends CI_Controller
 	public function getData()
 	{
 		$this->load->library("datatables_ssp");
-		$_table = "item";
+		$_table = "item_master";
 		$_conn 	= [
 			"user" 	=> $this->db->username,
 			"pass" 	=> $this->db->password,
@@ -35,15 +35,21 @@ class Item extends CI_Controller
 		];
 		$_key	= "item_id";
 		$_coll	= [
-			["db" => "item_code",	"dt" => "item_code"],
-			["db" => "category_id",	"dt" => "category_id"],
-			["db" => "item_desc",	"dt" => "item_desc"],
-			["db" => "item_unit",	"dt" => "item_unit"],
-			["db" => "item_price",	"dt" => "item_price"],
-			["db" => "supplier_id",	"dt" => "supplier_id"],
-			["db" => "item_id",		"dt" => "item_id"],
+			["db" => "item_code",		"dt" => "item_code"],
+			["db" => "category_desc",	"dt" => "category_desc"],
+			["db" => "item_desc",		"dt" => "item_desc"],
+			["db" => "item_unit",		"dt" => "item_unit"],
+			["db" => "item_price",		"dt" => "item_price",
+				"formatter" => function($d, $row) {
+					return number_format($d);
+				}
+			],
+			["db" => "supplier_name",	"dt" => "supplier_name"],
+			["db" => "item_id",			"dt" => "item_id"],
 			
-			["db" => "item_buy",	"dt" => "item_buy"],
+			["db" => "item_buy",		"dt" => "item_buy"],
+			["db" => "category_id",		"dt" => "category_id"],
+			["db" => "supplier_id",		"dt" => "supplier_id"]
 		];
 		
 		$_where	= NULL;
@@ -78,6 +84,8 @@ class Item extends CI_Controller
 		
 		if($exist->num_rows() == 0){
 			$this->MasterModel->add('item', $data);
+			$this->MasterModel->add('stock', array('item_id'=>$this->db->insert_id()));
+			
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data berhasil ditambahkan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Kode '.strtoupper($item_code).' sudah digunakan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -88,7 +96,7 @@ class Item extends CI_Controller
 	public function update()
 	{
 		$item_id		= $this->input->post('item_id');
-		$$item_code		= $this->input->post('item_code');
+		$item_code		= $this->input->post('item_code');
 		$category_id	= $this->input->post('category_id');
 		$item_desc		= $this->input->post('item_desc');
 		$item_unit		= $this->input->post('item_unit');
@@ -106,15 +114,9 @@ class Item extends CI_Controller
 			'supplier_id' 	=> $supplier_id,
 		);
 		$where = array('item_id' => $item_id);
-	 
-		$exist = $this->MasterModel->getBy('item', array('item_code'=>$item_code));
 		
-		if($exist->num_rows() == 0){
-			$this->MasterModel->edit('item', $where, $data);
-			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data berhasil diperbarui !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		} else {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Kode '.strtoupper($item_desc).' sudah digunakan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		}
+		$this->MasterModel->edit('item', $where, $data);
+		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data berhasil diperbarui !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect('item');
 	}
 
@@ -125,6 +127,7 @@ class Item extends CI_Controller
 		$row = $query->row();
 		
         $this->MasterModel->delete('item', $where);
+		$this->MasterModel->delete('stock', $where);
 		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data '.strtoupper($row->item_code).' berhasil dihapus !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('item');
     }
@@ -134,16 +137,19 @@ class Item extends CI_Controller
 		$term = $_GET['term'];
   
 		if(isset($term)){
-			$result = $this->db->like('item_code', $term, 'both')->or_like('item_desc', $term, 'both')->get('item')->result_array();
+			$result = $this->db->like('item_code', $term, 'both')->or_like('item_desc', $term, 'both')->join("stock", "item.item_id = stock.item_id")->get('item')->result_array();
 			
 			$output = [];
 			if(count($result) > 0){
 				foreach($result as $data){
 					$output[] = array(
-						"item_id"	=> $data['item_id'],
-						"item_code"	=> $data['item_code'],
-						"item_desc"	=> $data['item_desc'],
-						"item_unit"	=> $data['item_unit']
+						"item_id"		=> $data['item_id'],
+						"item_code"		=> $data['item_code'],
+						"item_desc"		=> $data['item_desc'],
+						"item_price"	=> $data['item_price'],
+						"item_buy"		=> $data['item_buy'],
+						"item_unit"		=> $data['item_unit'],
+						"stock_exist"	=> $data['stock_exist'],
 					);
 				}
 			} else {
@@ -152,5 +158,31 @@ class Item extends CI_Controller
 			
 			echo json_encode($output);
 		}
+	}
+	
+	public function getBarcode()
+    {
+		$term = $_GET['term'];
+		
+		$result = $this->db->where('item_code', $term)->join("stock", "item.item_id = stock.item_id")->get('item')->result_array();
+			
+		$output = [];
+		if(count($result) > 0){
+			foreach($result as $data){
+				$output[] = array(
+					"item_id"		=> $data['item_id'],
+					"item_code"		=> $data['item_code'],
+					"item_desc"		=> $data['item_desc'],
+					"item_price"	=> $data['item_price'],
+					"item_buy"		=> $data['item_buy'],
+					"item_unit"		=> $data['item_unit'],
+					"stock_exist"	=> $data['stock_exist'],
+				);
+			}
+		} else {
+			$output[] = array("item_status" => 400);
+		}
+			
+		echo json_encode($output);
 	}
 }

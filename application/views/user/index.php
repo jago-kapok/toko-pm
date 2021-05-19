@@ -41,7 +41,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h5 class="modal-title">Pengguna Baru</h5>
+        <h5 class="modal-title">Tambah Pengguna</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span>&times;</span>
         </button>
@@ -92,7 +92,7 @@
 	  </div>
       <div class="modal-footer">
 	    <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Simpan</button>
       </div>
 	  </form>
@@ -104,7 +104,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h5 class="modal-title">Edit Data Pengguna</h5>
+        <h5 class="modal-title">Edit Pengguna</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span>&times;</span>
         </button>
@@ -150,7 +150,7 @@
 	  </div>
       <div class="modal-footer">
 		<img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Update</button>
       </div>
 	  </form>

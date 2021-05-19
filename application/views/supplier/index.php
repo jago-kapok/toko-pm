@@ -25,12 +25,12 @@
   <table id="table_data" class="table table-bordered table-striped" width="100.1%">
 	<thead class="bg-info">
       <tr>
-		<th width="5">No.</th>
-        <th class="w-10">Kode</th>
-        <th class="w-25">Nama</th>
-        <th class="w-25">Alamat</th>
-        <th class="w-25">No. Telepon</th>
-        <th>#</th>
+		<th width="5">NO.</th>
+        <th class="w-10">KODE</th>
+        <th class="w-25">NAMA SUPPLIER</th>
+        <th class="w-25">ALAMAT</th>
+        <th class="w-25">NO. TELEPON</th>
+        <th class="text-left">#</th>
       </tr>
     </thead>
   </table>
@@ -40,7 +40,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h5 class="modal-title">Supplier Baru</h5>
+        <h5 class="modal-title">Tambah Supplier</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span>&times;</span>
         </button>
@@ -74,7 +74,7 @@
 	  </div>
       <div class="modal-footer">
 	    <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Simpan</button>
       </div>
 	  </form>
@@ -86,7 +86,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h5 class="modal-title">Ubah Supplier</h5>
+        <h5 class="modal-title">Edit Supplier</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span>&times;</span>
         </button>
@@ -121,7 +121,7 @@
 	  </div>
       <div class="modal-footer">
 	    <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
-        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary btn-sm btn-form">Simpan</button>
       </div>
 	  </form>

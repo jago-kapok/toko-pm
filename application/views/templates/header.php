@@ -187,7 +187,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('invoice'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('invoice/formCreate'); ?>" class="nav-link ml-5">
                   <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Penjualan Baru</p>
                 </a>

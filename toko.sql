@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2021 at 06:25 PM
+-- Generation Time: May 23, 2021 at 12:15 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -76,11 +76,14 @@ CREATE TABLE `invoice` (
   `invoice_number` char(15) DEFAULT NULL,
   `invoice_date` datetime DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
+  `customer_desc` varchar(50) DEFAULT NULL,
   `invoice_total` int(11) DEFAULT NULL,
+  `invoice_discount` int(11) DEFAULT NULL,
   `invoice_status` int(11) DEFAULT NULL,
   `invoice_notes` varchar(200) DEFAULT NULL,
   `invoice_created_by` int(11) DEFAULT NULL,
-  `invoice_created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `invoice_created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `invoice_modified_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -97,7 +100,8 @@ CREATE TABLE `invoice_detail` (
   `detail_item_desc` varchar(150) DEFAULT NULL,
   `detail_item_qty` int(11) DEFAULT NULL,
   `detail_item_unit` char(5) DEFAULT NULL,
-  `detail_item_price` int(11) DEFAULT NULL
+  `detail_item_price` int(11) DEFAULT NULL,
+  `detail_item_buy` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -196,7 +200,8 @@ INSERT INTO `purchase` (`purchase_id`, `purchase_number`, `purchase_date`, `supp
 (3, 'PO/V-2021/001', '2021-05-07 00:00:00', 1, 180000, NULL, NULL, NULL, '2021-05-06 15:25:26', '2021-05-16 07:37:33'),
 (4, 'PO/V-2021/002', '2021-05-06 00:00:00', 3, 90000, NULL, NULL, NULL, '2021-05-06 15:27:12', NULL),
 (6, 'PO/V-2021/003', '2021-05-16 00:00:00', 1, 262500, NULL, NULL, NULL, '2021-05-06 15:30:07', NULL),
-(33, '11111', '2021-05-19 00:00:00', 3, 50000, NULL, 1, NULL, '2021-05-19 16:24:22', '2021-05-19 23:25:11');
+(33, '11111', '2021-05-19 00:00:00', 3, 50000, NULL, 1, NULL, '2021-05-19 16:24:22', '2021-05-19 23:25:11'),
+(34, '11111', '2021-05-19 00:00:00', 3, 160000, NULL, NULL, NULL, '2021-05-19 16:44:57', '2021-05-19 23:44:57');
 
 -- --------------------------------------------------------
 
@@ -221,7 +226,8 @@ CREATE TABLE `purchase_detail` (
 
 INSERT INTO `purchase_detail` (`detail_id`, `purchase_id`, `detail_item_id`, `detail_item_code`, `detail_item_desc`, `detail_item_qty`, `detail_item_unit`, `detail_item_price`) VALUES
 (4, 33, 1, 'B001', 'Beras', 5, 'kg', 8000),
-(5, 33, 5, 'B005', 'Telur', 20, 'g', 500);
+(5, 33, 5, 'B005', 'Telur', 20, 'g', 500),
+(6, 34, 1, 'B001', 'Beras', 20, 'kg', 8000);
 
 -- --------------------------------------------------------
 
@@ -248,7 +254,7 @@ CREATE TABLE `quotation` (
 --
 
 INSERT INTO `quotation` (`quotation_id`, `quotation_number`, `quotation_date`, `customer_id`, `customer_desc`, `quotation_total`, `quotation_notes`, `quotation_status`, `quotation_created_by`, `quotation_created_date`, `quotation_modified_date`) VALUES
-(2, 'SQ/05-21/00001', '2021-05-16 00:00:00', 3, 'Naruto', 48000, NULL, 1, NULL, '2021-05-16 01:59:42', '2021-05-16 07:10:28'),
+(2, 'SQ/05-21/00001', '2021-05-16 00:00:00', 3, 'Naruto', 45000, NULL, 1, NULL, '2021-05-16 01:59:42', '2021-05-19 18:51:13'),
 (3, 'SQ/05-21/00002', '2021-05-16 00:00:00', 1, 'Tsubasa', 22000, 'Cash', 1, NULL, '2021-05-16 02:18:01', '2021-05-16 04:18:01'),
 (4, 'SQ/05-21/00003', '2021-05-16 00:00:00', 0, 'Hyuga', 33000, 'Cash', 1, NULL, '2021-05-16 02:18:22', '2021-05-16 04:18:22');
 
@@ -277,9 +283,7 @@ CREATE TABLE `quotation_detail` (
 INSERT INTO `quotation_detail` (`detail_id`, `quotation_id`, `detail_item_id`, `detail_item_code`, `detail_item_desc`, `detail_item_qty`, `detail_item_unit`, `detail_item_price`, `detail_item_buy`) VALUES
 (5, 3, 1, 'B001', 'Beras', 2, 'kg', 11000, 10000),
 (6, 4, 1, 'B001', 'Beras', 3, 'kg', 11000, 10000),
-(19, 2, 2, 'B002', 'Sabun', 2, 'g', 1000, NULL),
-(20, 2, 4, 'B004', 'Sabun Cuci 1 kg', 3, 'kg', 15000, NULL),
-(21, 2, 2, 'B002', 'Sabun', 1, 'g', 1000, NULL);
+(24, 2, 4, 'B004', 'Sabun Cuci 1 kg', 3, 'kg', 15000, NULL);
 
 -- --------------------------------------------------------
 
@@ -335,7 +339,7 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`stock_id`, `item_id`, `stock_min`, `stock_max`, `stock_exist`, `stock_updated_id`, `stock_updated_date`) VALUES
-(1, 1, 1, 10, 5, NULL, '2021-05-19 16:25:22'),
+(1, 1, 1, 10, 5, NULL, '2021-05-22 14:09:30'),
 (2, 2, 1, 10, 5, NULL, '2021-05-19 16:23:14'),
 (3, 3, 1, 10, 5, NULL, '2021-05-07 14:45:15'),
 (4, 4, 1, 10, 5, NULL, '2021-05-19 16:23:18'),
@@ -355,6 +359,13 @@ CREATE TABLE `stock_history` (
   `stock_history_type` int(11) DEFAULT NULL,
   `stock_history_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `stock_history`
+--
+
+INSERT INTO `stock_history` (`stock_history_id`, `item_id`, `stock_history_item_qty`, `stock_history_number`, `stock_history_type`, `stock_history_date`) VALUES
+(39, 1, 20, '11111', 1, '2021-05-19 16:44:57');
 
 -- --------------------------------------------------------
 
@@ -581,13 +592,13 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `purchase_detail`
 --
 ALTER TABLE `purchase_detail`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `quotation`
@@ -599,7 +610,7 @@ ALTER TABLE `quotation`
 -- AUTO_INCREMENT for table `quotation_detail`
 --
 ALTER TABLE `quotation_detail`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `setting`
@@ -623,7 +634,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `stock_history`
 --
 ALTER TABLE `stock_history`
-  MODIFY `stock_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `stock_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `stock_history_category`

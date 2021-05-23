@@ -2,7 +2,7 @@
   <?= $this->session->flashdata('message'); ?>
   <div class="row mb-1">
 	<div class="col-md-8">
-	  <a href="quotation/formCreate" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>
+	  <a href="invoice/formCreate" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>
 	    &nbsp;&nbsp;Tambah
 	  </a>
 	</div>
@@ -27,7 +27,7 @@
       <tr>
 		<th width="5">NO.</th>
         <th>TANGGAL</th>
-        <th>PENAWARAN</th>
+        <th>PENJUALAN</th>
         <th>PELANGGAN</th>
         <th class="text-left">TOTAL (Rp)</th>
         <th>STATUS</th>

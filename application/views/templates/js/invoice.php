@@ -14,21 +14,21 @@ var table = $("table#table_data").DataTable({
   bLengthChange : false,
   serverSide	: true,
   ajax	: {
-	url	: "<?= base_url('quotation/getData'); ?>",
+	url	: "<?= base_url('invoice/getData'); ?>",
 	type: "GET"
   },
   iDisplayLength: 10,
   columns: [
 	{data: null,				className: "text-left"},
-	{data: "quotation_date",	className: "text-left"},
-	{data: "quotation_number",	className: "text-left"},
+	{data: "invoice_date",		className: "text-left"},
+	{data: "invoice_number",	className: "text-left"},
 	{data: "customer_desc",		className: "text-left"},
-	{data: "quotation_total",	className: "text-right"},
+	{data: "invoice_total",		className: "text-right"},
 	{data: "status_desc",		className: "text-left"},
 	{
-	  data: "quotation_id",
+	  data: "invoice_id",
 	  render: function(data, type, row){
-		return '<a href="quotation/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="quotation/invoice/' + data + '" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>&nbsp;<a href="quotation/print/' + data + '" class="btn btn-warning btn-xs"><i class="fa fa-print"></i></a>&nbsp;<a href="quotation/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
+		return '<a href="invoice/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="invoice/print/' + data + '" class="btn btn-warning btn-xs"><i class="fa fa-print"></i></a>&nbsp;<a href="invoice/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
   ],
@@ -253,6 +253,6 @@ function sumTotal(){
   $(".total").each(function(){
     sum += +$(this).val();
   });
-  $("#quotation_total").val(sum);
+  $("#invoice_total").val(sum);
 }
 </script>

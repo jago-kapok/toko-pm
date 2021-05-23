@@ -1,10 +1,10 @@
-<form action="<?= base_url('quotation/create'); ?>" class="container-fluid mt-2" method="POST">
-  <input type="hidden" name="quotation_id" value="<?php echo $quotation->quotation_id ?>">
+<form action="<?= base_url('invoice/create'); ?>" class="container-fluid mt-2" method="POST">
+  <input type="hidden" name="invoice_id" value="<?php echo $invoice->invoice_id ?>">
   <div class="mb-1">
 	<div class="form-row mb-1">
-	  <label class="col-md-1 col-form-label">Penawaran</label>
+	  <label class="col-md-1 col-form-label">No. Invoice</label>
 	  <div class="col-md-2">
-		<input name="quotation_number" class="form-control form-control-sm" value="<?php echo $quotation->quotation_number ?>" readonly>
+		<input name="invoice_number" class="form-control form-control-sm" value="<?php echo $invoice->invoice_number ?>" readonly>
 	  </div>
 	  <label class="col-md-1 offset-md-5 col-form-label">Nama</label>
 	  <label id="customer_name" class="col-md-2 col-form-label">: <?php echo $customer->customer_name ?></label>
@@ -13,7 +13,7 @@
 	<div class="form-row mb-1">
 	  <label class="col-md-1 col-form-label">Tanggal <span class="text-danger">*</span></label>
 	  <div class="col-md-2">
-		<input type="date" name="quotation_date" class="form-control form-control-sm" value="<?php echo date('Y-m-d', strtotime($quotation->quotation_date)) ?>" required>
+		<input type="date" name="invoice_date" class="form-control form-control-sm" value="<?php echo date('Y-m-d', strtotime($invoice->invoice_date)) ?>" required>
 	  </div>
 	  <label class="col-md-1 offset-md-5 col-form-label">Alamat</label>
 	  <label id="customer_address" class="col-md-2 col-form-label">: <?php echo $customer->customer_address ?></label>
@@ -78,6 +78,7 @@
 				  <span id="item_unit"class="input-group-text"></span>
 				</div>
 			  </div>
+			  <small id="item_stock" class="form-text text-muted"></small>
 			</div>
 		  </div>
 		</div>
@@ -92,7 +93,7 @@
 	</div>
     <div class="col-md-9">
 	  <div class="card">
-		<div class="card-header bg-secondary"><span class="card-title">Detail Penawaran</span></div>
+		<div class="card-header bg-secondary"><span class="card-title">Detail Penjualan</span></div>
 		<div class="card-body">
 		  <table class="table table-bordered" width="100.1%">
 			<thead class="bg-default">
@@ -107,7 +108,7 @@
 			  </tr>
 			</thead>
 			<tbody>
-			  <?php foreach($quotation_detail AS $key => $row) { ?>
+			  <?php foreach($invoice_detail AS $key => $row) { ?>
 				<tr id="details<?php echo $key ?>">
 				  <td>
 				    <input type="hidden" name="detail_item_id[]" value="<?php echo $row->detail_item_id ?>">
@@ -125,9 +126,16 @@
 			<tbody id="item_detail"></tbody>
 			<tfoot>
 			  <tr class="bg-other">
-				<td colspan="5" align="right"><b>TOTAL PENAWARAN (Rp)</b></td>
+				<td colspan="5" align="right"><b>DISKON (Rp)</b></td>
 				<td>
-				  <input id="quotation_total" name="quotation_total" class="input-readonly number bg-other" style="font-weight:bold" value="<?php echo $quotation->quotation_total ?>" readonly>
+				  <input id="invoice_discount" name="invoice_discount" class="number" value="<?php echo $invoice->invoice_discount ?>" style="font-weight:bold; width:100%">
+				</td>
+				<td></td>
+			  </tr>
+			  <tr class="bg-other">
+				<td colspan="5" align="right"><b>TOTAL PENJUALAN (Rp)</b></td>
+				<td>
+				  <input id="invoice_total" name="invoice_total" class="input-readonly number bg-other" style="font-weight:bold" value="<?php echo $invoice->invoice_total ?>" readonly>
 				</td>
 				<td></td>
 			  </tr>
@@ -135,7 +143,7 @@
 		  </table>
 		</div>
 		<div class="card-footer">
-		  <a href="../quotation" class="btn btn-sm btn-outline-danger">
+		  <a href="../invoice" class="btn btn-sm btn-outline-danger">
 			<i class="fa fa-ban"></i>&nbsp;&nbsp;Batalkan Transaksi
 		  </a>
 		  <div class="float-right">

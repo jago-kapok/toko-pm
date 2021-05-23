@@ -65,7 +65,7 @@ class Quotation extends CI_Controller
         $current = '/'.date("m").'-'.date("y").'/';
 		$query = $this->db->select_max("quotation_number", "last")->like("quotation_number", $current, "both")->get("quotation")->row();
 		
-		$lastNo = substr($query->last, 11);
+		$lastNo = substr($query->last, 9);
 		$quotation_no = 'SQ'.$current.sprintf('%05s', $lastNo + 1);
 		
 		$data['number'] = $quotation_no;

@@ -30,9 +30,8 @@ var table = $("table#table_data").DataTable({
 		return '<a href="purchase/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="purchase/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus transaksi ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
-	
   ],
-  order: [[1, "DESC"]],
+  order: [[5, "DESC"]],
   rowCallback: function(row, data, iDisplayIndex){
 	var info 	= this.fnPagingInfo();
 	var page 	= info.iPage;

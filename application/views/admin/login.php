@@ -5,7 +5,7 @@
         <div class="card-header" style="background-color:; padding:30px">
           <h3 class="card-title" style="float:none">
 		    <center>
-			  <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.png" class="mr-auto" width="115">
+			  <img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="200">
 			</center>
 		  </h3>
         </div>
@@ -14,15 +14,15 @@
 			<?= $this->session->flashdata('message'); ?>
             <div class="form-group">
               <label class="text-secondary">Username</label>
-              <input type="text" name="username" class="form-control" placeholder="Enter Username">
+              <input type="text" name="username" class="form-control" placeholder="Masukan Username">
             </div>
             <div class="form-group">
               <label class="text-secondary">Password</label>
-              <input type="password" name="password" class="form-control" placeholder="Enter Password">
+              <input type="password" name="password" class="form-control" placeholder="Masukan Password">
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
           </div>
         </form>
       </div>

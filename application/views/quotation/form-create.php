@@ -78,6 +78,7 @@
 				  <span id="item_unit" class="input-group-text"></span>
 				</div>
 			  </div>
+			  <input type="hidden" id="item_stock_exist">
 			  <small id="item_stock" class="form-text text-muted"></small>
 			</div>
 		  </div>

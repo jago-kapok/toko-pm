@@ -6,7 +6,7 @@ class Quotation extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-		// authentication();
+		authentication();
     }
 
     public function index()
@@ -151,6 +151,40 @@ class Quotation extends CI_Controller
         $this->load->view('quotation/form-update', $data);
         $this->load->view('templates/footer');
 		$this->load->view('templates/js/quotation');
+    }
+    
+    public function invoice()
+	{
+		$quotation_id = $this->uri->segment(3);
+		$this->session->set_userdata("quotation_id", $quotation_id);
+		redirect('quotation/formInvoice');
+	}
+	
+	public function formInvoice()
+    {
+		$quotation = $this->MasterModel->getBy('quotation', array('quotation_id'=>$_SESSION['quotation_id']))->row();
+		$quotation_detail = $this->MasterModel->getBy('quotation_detail', array('quotation_id'=>$_SESSION['quotation_id']))->result();
+		
+		$data['quotation'] = $quotation;
+		$data['quotation_detail'] = $quotation_detail;
+		$data['customer'] = $this->MasterModel->getBy('customer', array('customer_id'=>$quotation->customer_id))->row();
+		
+        $data['title'] = 'Data Penjualan ('.$quotation->quotation_number.')';
+        
+        /* invoice Number */
+        $current = '/'.date("m").'-'.date("y").'/';
+		$query = $this->db->select_max("invoice_number", "last")->like("invoice_number", $current, "both")->get("invoice")->row();
+		
+		$lastNo = substr($query->last, 10);
+		$invoice_no = 'INV'.$current.sprintf('%05s', $lastNo + 1);
+		
+		$data['number'] = $invoice_no;
+		/* invoice Number */
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('invoice/form-quotation', $data);
+        $this->load->view('templates/footer');
+		$this->load->view('templates/js/invoice');
     }
 	
     public function delete()

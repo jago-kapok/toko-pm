@@ -32,7 +32,7 @@ var table = $("table#table_data").DataTable({
 	  }
 	}
   ],
-  order: [[5, "DESC"]],
+  order: [[6, "DESC"]],
   rowCallback: function(row, data, iDisplayIndex){
 	var info 	= this.fnPagingInfo();
 	var page 	= info.iPage;
@@ -92,6 +92,7 @@ $("#item_code").autocomplete({
     $("#item_buy").val(ui.item.item_buy);
     $("#item_unit").text(ui.item.item_unit);
     $("#item_stock").text("Sisa stok : " + ui.item.stock_exist);
+    $("#item_stock_exist").val(ui.item.stock_exist);
 	
 	$("#item_code").attr("readonly", true);
 	$("#item_qty").focus();
@@ -151,14 +152,17 @@ $("#item_add").click(function(){
   let item_buy		= $("#item_buy").val();
   let item_qty		= $("#item_qty").val();
   let item_unit		= $("#item_unit").text();
+  let item_stock	= $("#item_stock_exist").val();
   let item_total	= item_qty * item_price;
   
   if(item_code != ''){
 	if(item_price == ''){
 	  alert("Harga barang tidak boleh kosong !");
 	} else {
-	  if(item_qty == ''){
+	  if(item_qty == '' || item_qty == 0){
 		alert("Qty tidak boleh kosong !");
+	  } else if(item_qty > item_stock){
+		alert("Stok tersisa hanya : " + item_stock);
 	  } else {
 		$("#item_detail").append("<tr id='detail" + no + "'></tr>");
 		$("#detail" + no)
@@ -249,10 +253,24 @@ document.addEventListener("visibilitychange", function(){
 /* ============================ */
 
 function sumTotal(){
-  var sum = 0;
+  let sum = 0;
   $(".total").each(function(){
     sum += +$(this).val();
   });
-  $("#invoice_total").val(sum);
+  
+  let discount = $("#invoice_discount").val();
+  $("#invoice_total").val(sum - discount);
 }
+
+/* ============================ */
+/* Discount						
+/* ============================ */
+
+$("#invoice_discount").on("keyup", function(){
+  if($(this).val() == ""){
+	$(this).val(0);
+  }
+	
+  sumTotal();
+});
 </script>

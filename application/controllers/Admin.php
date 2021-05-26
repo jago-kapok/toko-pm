@@ -7,35 +7,34 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-		// authentication();
+		authentication();
     }
 
     public function index()
     {
-		$data['title'] = 'Dashboard Monitoring';
+		$data['title'] = 'Dashboard';
 		
-		// $data['visited'] = $this->ModelMaster->getBy('target', array('id_status'=>1))->num_rows();
-		// $data['paid'] = $this->ModelMaster->getBy('target', array('id_status'=>7))->num_rows();
-		// $data['blocked'] = $this->ModelMaster->getBy('target', array('id_status'=>8))->num_rows();
-		// $data['not_paid'] = $this->ModelMaster->getBy('target', array('id_status >'=>1, 'id_status <'=>7))->num_rows();
+		$data['quotation']	= $this->MasterModel->getBy('quotation', array('quotation_status'=>1))->num_rows();
+		$data['invoice']	= $this->MasterModel->getBy('invoice', array('invoice_status'=>1))->num_rows();
+		$data['purchase']	= $this->MasterModel->getBy('purchase', array('purchase_status'=>0))->num_rows();
 		
-		// $year = !$this->session->flashdata('year') ? date('Y') : $this->session->flashdata('year');
+		$year = !$this->session->flashdata('year') ? date('Y') : $this->session->flashdata('year');
 		
-		// $data['jan'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>1,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['feb'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>2,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['mar'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>3,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['apr'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>4,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['may'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>5,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['jun'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>6,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['jul'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>7,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['aug'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>8,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['sep'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>9,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['oct'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>10,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['nov'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>11,'YEAR(tgl_create)'=>$year))->num_rows();
-		// $data['dec'] = $this->ModelMaster->getBy('target', array('MONTH(tgl_create)'=>12,'YEAR(tgl_create)'=>$year))->num_rows();
+		$data['jan'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>1,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['feb'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>2,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['mar'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>3,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['apr'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>4,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['may'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>5,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['jun'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>6,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['jul'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>7,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['aug'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>8,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['sep'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>9,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['oct'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>10,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['nov'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>11,'YEAR(invoice_date)'=>$year))->num_rows();
+		$data['dec'] = $this->MasterModel->getBy('invoice', array('MONTH(invoice_date)'=>12,'YEAR(invoice_date)'=>$year))->num_rows();
 		
 		// $data['target'] = $this->ModelMaster->getBy('target', array('YEAR(tgl_create)'=>$year))->num_rows();
-		$data['user'] = $this->ModelMaster->getAll('user')->num_rows();
+		//~ $data['user'] = $this->ModelMaster->getAll('user')->num_rows();
 		// $data['pelanggan'] = $this->ModelMaster->getAll('pelanggan')->num_rows();
 		// $data['harmet'] = $this->ModelMaster->getBy('harmet', array('status_harmet'=>1))->num_rows();
 		

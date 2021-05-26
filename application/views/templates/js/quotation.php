@@ -28,11 +28,17 @@ var table = $("table#table_data").DataTable({
 	{
 	  data: "quotation_id",
 	  render: function(data, type, row){
-		return '<a href="quotation/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="quotation/invoice/' + data + '" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>&nbsp;<a href="quotation/print/' + data + '" class="btn btn-warning btn-xs"><i class="fa fa-print"></i></a>&nbsp;<a href="quotation/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
+		if(row.status_desc == "INVOICED"){
+		  invoice_status = "hidden";
+		} else {
+		  invoice_status = "";
+		}
+		
+		return '<a href="quotation/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="quotation/invoice/' + data + '" class="btn btn-success btn-xs" onclick="return confirm(\'Anda yakin ingin membuat invoice dari penawaran ini ?\')" ' + invoice_status + '><i class="fa fa-check"></i></a>&nbsp;<a href="quotation/print/' + data + '" class="btn btn-warning btn-xs"><i class="fa fa-print"></i></a>&nbsp;<a href="quotation/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
   ],
-  order: [[5, "DESC"]],
+  order: [[6, "DESC"]],
   rowCallback: function(row, data, iDisplayIndex){
 	var info 	= this.fnPagingInfo();
 	var page 	= info.iPage;
@@ -92,6 +98,7 @@ $("#item_code").autocomplete({
     $("#item_buy").val(ui.item.item_buy);
     $("#item_unit").text(ui.item.item_unit);
     $("#item_stock").text("Sisa stok : " + ui.item.stock_exist);
+    $("#item_stock_exist").val(ui.item.stock_exist);
 	
 	$("#item_code").attr("readonly", true);
 	$("#item_qty").focus();
@@ -151,14 +158,17 @@ $("#item_add").click(function(){
   let item_buy		= $("#item_buy").val();
   let item_qty		= $("#item_qty").val();
   let item_unit		= $("#item_unit").text();
+  let item_stock	= $("#item_stock_exist").val();
   let item_total	= item_qty * item_price;
   
   if(item_code != ''){
 	if(item_price == ''){
 	  alert("Harga barang tidak boleh kosong !");
 	} else {
-	  if(item_qty == ''){
+	  if(item_qty == '' || item_qty == 0){
 		alert("Qty tidak boleh kosong !");
+	  } else if(item_qty > item_stock){
+		alert("Stok tersisa hanya : " + item_stock);
 	  } else {
 		$("#item_detail").append("<tr id='detail" + no + "'></tr>");
 		$("#detail" + no)

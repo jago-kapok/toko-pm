@@ -66,19 +66,19 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a href="#" class="nav-link" data-toggle="dropdown">
-		  Selamat Datang, <?= $this->session->userdata('fullname'); ?>&nbsp;
+		  Selamat Datang, <?= $this->session->userdata('user_fullname'); ?>&nbsp;
 		  <i class="far fa-user-circle"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <span class="dropdown-item dropdown-header">User's Menu</span>
           <div class="dropdown-divider"></div>
           <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#update_user"
-		    data-id_user="<?= $this->session->userdata('id'); ?>"
-			data-nama_user="<?= $this->session->userdata('fullname'); ?>"
-			data-username="<?= $this->session->userdata('username'); ?>"
-			data-password="<?= $this->session->userdata('password'); ?>"
-			data-email_user="<?= $this->session->userdata('email'); ?>"
-			data-telp_user="<?= $this->session->userdata('phone'); ?>"
+		    data-id_user="<?= $this->session->userdata('user_id'); ?>"
+			data-nama_user="<?= $this->session->userdata('user_fullname'); ?>"
+			data-username="<?= $this->session->userdata('user_name'); ?>"
+			data-password="<?= $this->session->userdata('user_password'); ?>"
+			data-address_user="<?= $this->session->userdata('user_address'); ?>"
+			data-telp_user="<?= $this->session->userdata('user_phone'); ?>"
 		  >
             <i class="fas fa-user-cog mr-2"></i> Profile
           </a>
@@ -108,7 +108,7 @@
           <img src="<?= base_url('assets/'); ?>dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info" style="margin-top:-6px">
-          <span class="d-block text-light">&nbsp;&nbsp;<strong><?= $this->session->userdata('fullname'); ?></strong></span>
+          <span class="d-block text-light">&nbsp;&nbsp;<strong><?= $this->session->userdata('user_fullname'); ?></strong></span>
           <span class="d-block text-light">&nbsp;&nbsp;<?= $this->session->userdata('level'); ?></span>
         </div>
       </div>
@@ -237,13 +237,34 @@
             </a>
           </li>
 		  
-		  <li class="nav-item">
-            <a href="<?= base_url('/'); ?>" class="nav-link" style="color:#bff7c1">
+		  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link" style="color:#bff7c1">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 &nbsp;&nbsp;Laporan
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterQuotationReport">
+                  <i class="fas fa-caret-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Pembelian</p>
+                </a>
+              </li>
+			  <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterInvoiceReport">
+                  <i class="fas fa-caret-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Penjualan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterAllReport">
+                  <i class="fas fa-caret-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Rugi / Laba</p>
+                </a>
+              </li>
+            </ul>
           </li>
 		  
 		  <li class="dropdown-divider"></li>
@@ -276,11 +297,98 @@
 	</div>
   </aside>
   
-  <div class="modal fade" id="update_user" role="dialog">
+  <div class="modal fade" id="filterQuotationReport" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+		<div class="modal-header bg-info">
+		  <h5 class="modal-title"><span>Laporan Penawaran</span></h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span>&times;</span>
+		  </button>
+		</div>
+		<form action="<?= base_url('quotationReport'); ?>" method="POST">
+		  <div class="modal-body">
+			<div class="form-group">
+			  <label>Dari Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" name="start_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" name="finish_date" class="form-control form-control-sm" required>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
+			<button type="submit" class="btn btn-primary btn-sm btn-form">Submit</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+  
+  <div class="modal fade" id="filterInvoiceReport" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+		<div class="modal-header bg-info">
+		  <h5 class="modal-title"><span>Laporan Penjualan</span></h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span>&times;</span>
+		  </button>
+		</div>
+		<form action="<?= base_url('invoiceReport'); ?>" method="POST">
+		  <div class="modal-body">
+			<div class="form-group">
+			  <label>Dari Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" name="start_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" name="finish_date" class="form-control form-control-sm" required>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
+			<button type="submit" class="btn btn-primary btn-sm btn-form">Submit</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+  
+  <div class="modal fade" id="filterAllReport" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+		<div class="modal-header bg-info">
+		  <h5 class="modal-title"><span>Laporan Rugi Laba</span></h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span>&times;</span>
+		  </button>
+		</div>
+		<form action="<?= base_url('allReport'); ?>" method="POST">
+		  <div class="modal-body">
+			<div class="form-group">
+			  <label>Dari Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" name="start_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" name="finish_date" class="form-control form-control-sm" required>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
+			<button type="submit" class="btn btn-primary btn-sm btn-form">Submit</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+  
+    <div class="modal fade" id="update_user" role="dialog">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header bg-info">
-			<h5 class="modal-title"><span>Update Profile</span></h5>
+			<h5 class="modal-title"><span>Edit Profil</span></h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span>&times;</span>
 			</button>
@@ -288,33 +396,33 @@
 		  <form action="<?= base_url('user/update'); ?>" method="POST">
 		  <div class="modal-body">
 			<div class="form-group">
-			  <label>Full Name</label>
-			  <input type="hidden" name="id_user" class="form-control form-control-sm">
-			  <input name="nama_user" class="form-control form-control-sm">
+			  <label>Nama Lengkap</label>
+			  <input type="hidden" name="user_id" class="form-control form-control-sm">
+			  <input name="user_fullname" class="form-control form-control-sm">
 			</div>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
 				<label>Username <span class="text-danger">*</span></label>
-				<input name="username" class="form-control form-control-sm" readonly>
+				<input name="user_name" class="form-control form-control-sm" readonly>
 			  </div>
 			  <div class="form-group col-md-6">
 				<label>New Password <span class="text-danger">*</span></label>
-				<input type="password" name="password" class="form-control form-control-sm" required>
+				<input type="password" name="user_password" class="form-control form-control-sm" required>
 			  </div>
 			</div>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
-				<label>Email Address</label>
-				<input type="email" name="email_user" class="form-control form-control-sm">
+				<label>Alamat</label>
+				<input name="user_address" class="form-control form-control-sm">
 			  </div>
 			  <div class="form-group col-md-6">
-				<label>Phone Number</label>
-				<input type="tel" name="telp_user" class="form-control form-control-sm">
+				<label>No. Telepon</label>
+				<input type="tel" name="user_phone" class="form-control form-control-sm">
 			  </div>
 			</div>
 		  </div>
 		  <div class="modal-footer">
-			<img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.png" class="mr-auto" width="115">
+			<img src="<?= base_url('assets/'); ?>dist/img/AdminLTELogo__.jpeg" class="mr-auto" width="115">
 			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Close</button>
 			<button type="submit" class="btn btn-primary btn-sm btn-form">Update</button>
 		  </div>

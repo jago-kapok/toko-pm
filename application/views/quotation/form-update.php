@@ -7,8 +7,8 @@
 		<input name="quotation_number" class="form-control form-control-sm" value="<?php echo $quotation->quotation_number ?>" readonly>
 	  </div>
 	  <label class="col-md-1 offset-md-5 col-form-label">Nama</label>
-	  <label id="customer_name" class="col-md-2 col-form-label">: <?php echo $customer->customer_name ?></label>
-	  <input type="hidden" id="customer_desc" name="customer_desc" value="<?php echo $customer->customer_name ?>">
+	  <label id="customer_name" class="col-md-2 col-form-label">: <?php echo $quotation->customer_desc ?></label>
+	  <input type="hidden" id="customer_desc" name="customer_desc" value="<?php echo $quotation->customer_desc ?>">
 	</div>
 	<div class="form-row mb-1">
 	  <label class="col-md-1 col-form-label">Tanggal <span class="text-danger">*</span></label>
@@ -78,6 +78,8 @@
 				  <span id="item_unit"class="input-group-text"></span>
 				</div>
 			  </div>
+			  <input type="hidden" id="item_stock_exist">
+			  <small id="item_stock" class="form-text text-muted"></small>
 			</div>
 		  </div>
 		</div>

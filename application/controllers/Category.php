@@ -6,7 +6,7 @@ class Category extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-		// authentication();
+		authentication();
 
 		$this->load->model("CategoryModel", "mod_category");
     }

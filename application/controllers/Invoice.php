@@ -6,7 +6,7 @@ class Invoice extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-		// authentication();
+		authentication();
     }
 
     public function index()
@@ -79,6 +79,7 @@ class Invoice extends CI_Controller
 	
 	public function create()
 	{
+		$quotation_id		= $this->input->post('quotation_id');
 		$invoice_number		= $this->input->post('invoice_number');
 		$invoice_date		= $this->input->post('invoice_date');
 		$customer_id		= $this->input->post('customer_id');
@@ -88,6 +89,7 @@ class Invoice extends CI_Controller
 		$invoice_notes		= $this->input->post('invoice_notes');
 		
 		$data = array(
+			'quotation_id'			=> $quotation_id,
 			'invoice_number'		=> $invoice_number,
 			'invoice_date'			=> $invoice_date,
 			'customer_id'			=> $customer_id,
@@ -133,6 +135,10 @@ class Invoice extends CI_Controller
 		
 		$this->updateStock($invoice_number, 0);
 		$this->db->insert_batch('invoice_detail', $result);
+		
+		if($quotation_id != "" || $quotation_id > 0){
+			$this->MasterModel->edit('quotation', ['quotation_id'=>$quotation_id], ['quotation_status'=>4]);
+		}
 		
 		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data Penjualan berhasil disimpan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		

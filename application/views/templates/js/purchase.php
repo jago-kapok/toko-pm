@@ -148,7 +148,7 @@ $("#item_add").click(function(){
 	if(item_price == ''){
 	  alert("Harga barang tidak boleh kosong !");
 	} else {
-	  if(item_qty == ''){
+	  if(item_qty == '' || item_qty == 0){
 		alert("Qty tidak boleh kosong !");
 	  } else {
 		$("#item_detail").append("<tr id='detail" + no + "'></tr>");

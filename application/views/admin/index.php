@@ -5,9 +5,9 @@
         <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-file"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Penawaran</span>
-		  <a href="<?= base_url('transaction/export_visited'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-file-download"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= $quotation; ?></span>
+          <span class="info-box-text"><b>Total Penawaran (Rp)</b></span>
+		  <a href="<?= base_url('transaction/export_visited'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
+          <span class="info-box-number" style="font-size:20px"><?= number_format($quotation->quotation_total); ?></span>
         </div>
       </div>
     </div>
@@ -16,9 +16,9 @@
         <span class="info-box-icon bg-success elevation-1"><i class="fa fa-file-invoice-dollar"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Penjualan</span>
-		  <a href="<?= base_url('transaction/export_not_paid'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-file-download"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= $invoice; ?></span>
+          <span class="info-box-text"><b>Total Penjualan (Rp)</b></span>
+		  <a href="<?= base_url('transaction/export_not_paid'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
+          <span class="info-box-number" style="font-size:20px"><?= number_format($invoice->invoice_total); ?></span>
         </div>
       </div>
     </div>
@@ -30,9 +30,9 @@
         <span class="info-box-icon bg-info elevation-1"><i class="fa fa-shopping-cart"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Pembelian</span>
-		  <a href="<?= base_url('transaction/export_paid'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-file-download"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= $purchase; ?></span>
+          <span class="info-box-text"><b>Total Pembelian (Rp)</b></span>
+		  <a href="<?= base_url('transaction/export_paid'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
+          <span class="info-box-number" style="font-size:20px"><?= number_format($purchase->purchase_total); ?></span>
         </div>
       </div>
     </div>
@@ -41,9 +41,9 @@
         <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-copy"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Semua Transaksi</span>
-		  <a href="<?= base_url('transaction/export_blocked'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-file-download"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= $quotation + $invoice + $purchase; ?></span>
+          <span class="info-box-text"><b>Jumlah Produk</b></span>
+		  <a href="<?= base_url('transaction/export_blocked'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-cubes"></i></a>
+          <span class="info-box-number" style="font-size:20px"><?= $item; ?></span>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5 class="card-title">Grafik Transaksi Tahun <?php echo date('Y') ?></h5>
+          <h5 class="card-title">Rekap Transaksi Tahun <?php echo date('Y') ?></h5>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -82,32 +82,27 @@
 			  <div class="row">
 			    <div class="col-md-12">
                   <p class="text-center">
-                    <strong>Table Information</strong>
+                    <strong>Transaksi Penjualan Terakhir</strong>
                   </p>
 
-                  <div class="progress-group">
-                   Total User
-                    <span class="float-right"><b><?= $quotation; ?></b></span>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-primary" style="width: <?= $quotation; ?>%"></div>
-                    </div>
-                  </div>
-              
-                  <div class="progress-group">
-                    Total Customer
-                    <span class="float-right"><b><?= $invoice; ?></b></span>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-danger" style="width: <?= $invoice; ?>%"></div>
-                    </div>
-                  </div>
-
-                  <div class="progress-group">
-                    Total P2TL
-                    <span class="float-right"><b><?= $purchase; ?></b></span>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-success" style="width: <?= $purchase; ?>%"></div>
-                    </div>
-			      </div>
+                  <table class="table" width="100%">
+					<thead class="bg-success">
+					  <th class="w-25">Transaksi</th>
+					  <th class="w-25">Total</th>
+					  <th class="w-25">Profit</th>
+					</thead>
+					<tbody>
+					  <?php foreach($recent_invoice as $row) { ?>
+						<tr>
+						  <td>
+							<a href="javascript:void(0)"><?php echo $row->invoice_number ?></a><br><i><?php echo $row->customer_name ?></i>
+						  </td>
+						  <td align="right" style="vertical-align:middle; font-size:15px"><b><?php echo number_format($row->invoice_total) ?></b></td>
+						  <td align="right" style="vertical-align:middle; font-size:15px"><b><?php echo number_format($row->invoice_total - $row->invoice_profit) ?></b></td>
+						</tr>
+					  <?php } ?>
+					</tbody>
+                  </table>
 			    </div>
 			  </div>
             </div>

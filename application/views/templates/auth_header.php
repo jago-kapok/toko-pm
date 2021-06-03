@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Monitoring P2TL &amp; Harmet</title>
+    <title>Pandu Mulya - Nganjuk</title>
 
 	<link rel="icon" href="<?= base_url('assets/'); ?>dist/img/AdminLTELogo.png" />
     <!-- Custom css for this template-->

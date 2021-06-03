@@ -67,6 +67,7 @@
 				<div class="input-group-prepend">
 				  <span class="input-group-text">Rp</span>
 				</div>
+				<input type="hidden" id="item_buy" class="form-control form-control-sm number">
 				<input id="item_price" class="form-control form-control-sm number">
 			  </div>
 			</div>
@@ -118,7 +119,7 @@
 				  <td><input name="detail_item_desc[]" class="input-readonly" value="<?php echo $row->detail_item_desc ?>" readonly></td>
 				  <td><input name="detail_item_qty[]" class="input-readonly number" value="<?php echo $row->detail_item_qty ?>" readonly></td>
 				  <td><input name="detail_item_unit[]" class="input-readonly" value="<?php echo $row->detail_item_unit ?>" readonly></td>
-				  <td><input name="detail_item_price[]" class="input-readonly number" value="<?php echo $row->detail_item_price ?>" readonly></td>
+				  <td><input name="detail_item_price[]" class="input-readonly number" value="<?php echo $row->detail_item_price ?>" readonly><input type="text" name="detail_item_buy[]" value="<?php echo $row->detail_item_buy ?>"></td>
 				  <td><input class="input-readonly number total" value="<?php echo ($row->detail_item_qty * $row->detail_item_price) ?>" readonly></td>
 				  <th width="5%"><button id="details<?php echo $key ?>" type="button" class="btn btn-xs btn-danger" onclick="removeItem(this.id)"><i class="fa fa-trash"></i></button></th>
 				</tr>

@@ -62,11 +62,11 @@ class Invoice extends CI_Controller
         $data['title'] = 'Data Penjualan';
         
         /* invoice Number */
-        $current = '/'.date("m").'-'.date("y").'/';
+        $current = date("y").'/';
 		$query = $this->db->select_max("invoice_number", "last")->like("invoice_number", $current, "both")->get("invoice")->row();
 		
 		$lastNo = substr($query->last, 10);
-		$invoice_no = 'INV'.$current.sprintf('%05s', $lastNo + 1);
+		$invoice_no = 'INV'.'/'.date("m").'-'.$current.sprintf('%05s', $lastNo + 1);
 		
 		$data['number'] = $invoice_no;
 		/* invoice Number */

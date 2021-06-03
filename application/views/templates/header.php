@@ -139,75 +139,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Pelanggan</p>
-                </a>
-              </li>
-			  <li class="nav-item">
                 <a href="<?= base_url('item'); ?>" class="nav-link ml-5">
                   <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Produk</p>
                 </a>
               </li>
-            </ul>
-          </li>
-		  
-		  <li class="nav-item has-treeview">
-            <a href="<?= base_url('quotation'); ?>" class="nav-link" style="color:#f7e8bf">
-              <i class="nav-icon fas fa-file"></i>
-              <p>
-                &nbsp;&nbsp;Penawaran
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('quotation'); ?>" class="nav-link ml-5">
+                <a href="<?= base_url('customer'); ?>" class="nav-link ml-5">
                   <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Data Penawaran</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-		  
-		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link" style="color:#bff7c1">
-              <i class="nav-icon fas fa-file-invoice"></i>
-              <p>
-                &nbsp;&nbsp;Penjualan
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-			  <li class="nav-item">
-                <a href="<?= base_url('invoice'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Data Penjualan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= base_url('invoice/formCreate'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Penjualan Baru</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-		  
-		  <li class="nav-item has-treeview">
-            <a href="#" class="nav-link" style="color:#bfd6f7">
-              <i class="nav-icon fas fa-shopping-cart"></i>
-              <p>
-                &nbsp;&nbsp;Pembelian
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url('purchase'); ?>" class="nav-link ml-5">
-                  <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Data Pembelian</p>
+                  <p>&nbsp;&nbsp;Pelanggan</p>
                 </a>
               </li>
 			  <li class="nav-item">
@@ -217,6 +157,33 @@
                 </a>
               </li>
             </ul>
+          </li>
+		  
+		  <li class="nav-item">
+            <a href="<?= base_url('quotation'); ?>" class="nav-link" style="color:#f7e8bf">
+              <i class="nav-icon fas fa-file"></i>
+              <p>
+                &nbsp;&nbsp;Penawaran
+              </p>
+            </a>
+          </li>
+		  
+		  <li class="nav-item has-treeview">
+            <a href="<?= base_url('invoice'); ?>" class="nav-link" style="color:#bff7c1">
+              <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                &nbsp;&nbsp;Penjualan
+              </p>
+            </a>
+          </li>
+		  
+		  <li class="nav-item has-treeview">
+            <a href="<?= base_url('purchase'); ?>" class="nav-link" style="color:#bfd6f7">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>
+                &nbsp;&nbsp;Pembelian
+              </p>
+            </a>
           </li>
 		  
 		  <li class="nav-item">

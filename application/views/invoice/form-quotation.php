@@ -67,6 +67,7 @@
 				<div class="input-group-prepend">
 				  <span class="input-group-text">Rp</span>
 				</div>
+				<input type="hidden" id="item_buy" class="form-control form-control-sm number">
 				<input id="item_price" class="form-control form-control-sm number">
 			  </div>
 			</div>

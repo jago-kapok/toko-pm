@@ -170,7 +170,7 @@ $("#item_add").click(function(){
 		  .append("<td><input name='detail_item_desc[]' class='input-readonly' value='" + item_desc + "' readonly></td>")
 		  .append("<td><input name='detail_item_qty[]' class='input-readonly number' value='" + item_qty + "' readonly></td>")
 		  .append("<td><input name='detail_item_unit[]' class='input-readonly' value='" + item_unit + "' readonly></td>")
-		  .append("<td><input name='detail_item_price[]' class='input-readonly number' value='" + item_price + "' readonly><input type='hidden' name='detail_item_buy[]' class='input-readonly number' value='" + item_buy + "'></td>")
+		  .append("<td><input name='detail_item_price[]' class='input-readonly number' value='" + item_price + "' readonly><input type='hidden' name='detail_item_buy[]' value='" + item_buy + "'></td>")
 		  .append("<td><input class='input-readonly number total' value='" + item_total + "' readonly></td>")
 		  .append("<td><button id='detail" + no + "' type='button' class='btn btn-xs btn-danger' onclick='removeItem(this.id)'><i class='fa fa-trash'></i></button></td>");
 		  
@@ -226,7 +226,7 @@ function detectBarcode(val){
 		  .append("<td><input name='detail_item_desc[]' class='input-readonly' value='" + value.item_desc + "' readonly></td>")
 		  .append("<td><input name='detail_item_qty[]' class='input-readonly number' value='1'></td>")
 		  .append("<td><input name='detail_item_unit[]' class='input-readonly' value='" + value.item_unit + "' readonly></td>")
-		  .append("<td><input name='detail_item_price[]' class='input-readonly number' value='" + value.item_price + "' readonly><input type='hidden' name='detail_item_buy[]' class='input-readonly number' value='" + value.item_buy + "'></td>")
+		  .append("<td><input name='detail_item_price[]' class='input-readonly number' value='" + value.item_price + "' readonly><input type='hidden' name='detail_item_buy[]' value='" + value.item_buy + "'></td>")
 		  .append("<td><input class='input-readonly number total' value='" + item_total + "' readonly></td>")
 		  .append("<td><button id='detail" + no + "' type='button' class='btn btn-xs btn-danger' onclick='removeItem(this.id)'><i class='fa fa-trash'></i></button></td>");
 		  

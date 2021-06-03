@@ -14,9 +14,10 @@ class Admin extends CI_Controller
     {
 		$data['title'] = 'Dashboard';
 		
-		$data['quotation']	= $this->MasterModel->getBy('quotation', array('quotation_status'=>1))->num_rows();
-		$data['invoice']	= $this->MasterModel->getBy('invoice', array('invoice_status'=>1))->num_rows();
-		$data['purchase']	= $this->MasterModel->getBy('purchase', array('purchase_status'=>0))->num_rows();
+		$data['quotation']	= $this->db->select('SUM(quotation_total) AS quotation_total')->where(['quotation_status'=>1])->get('quotation')->row();
+		$data['invoice']	= $this->db->select('SUM(invoice_total) AS invoice_total')->where(['invoice_status'=>1])->get('invoice')->row();
+		$data['purchase']	= $this->db->select('SUM(purchase_total) AS purchase_total')->where(['purchase_status'=>0])->get('purchase')->row();
+		$data['item']		= $this->MasterModel->getBy('item', NULL)->num_rows();
 		
 		$year = !$this->session->flashdata('year') ? date('Y') : $this->session->flashdata('year');
 		
@@ -50,6 +51,8 @@ class Admin extends CI_Controller
 		
 		// $data['harmet_hari'] = round((($harmet_tahun / 365) / $harmet_target->hari_harmet_target) * 100, 3);
 		// $data['harmet_hari_terealisasi'] = round($harmet_tahun / 365, 3);
+		
+		$data['recent_invoice'] = $this->db->query("SELECT invoice_number, invoice_date, customer_name, invoice_total, SUM(detail_item_buy * detail_item_qty) AS invoice_profit	FROM invoice JOIN invoice_detail ON invoice.invoice_id = invoice_detail.invoice_id JOIN customer ON invoice.customer_id = customer.customer_id WHERE invoice.invoice_status = 1 GROUP BY invoice.invoice_id ORDER BY invoice.invoice_id DESC LIMIT 5")->result();
 		
         $this->load->view('templates/header', $data);
         $this->load->view('admin/index', $data);

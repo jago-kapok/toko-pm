@@ -7,6 +7,8 @@ class Quotation extends CI_Controller
     {
         parent::__construct();
 		authentication();
+		
+		$this->load->library('pdf');
     }
 
     public function index()
@@ -189,12 +191,101 @@ class Quotation extends CI_Controller
 	
     public function delete()
     {
-        $where = ['quotation_id' => $this->uri->segment(3)];
-		$query = $this->MasterModel->getBy('quotation', $where);
-		$row = $query->row();
+        $where	= ['quotation_id' => $this->uri->segment(3)];
+		$query	= $this->MasterModel->getBy('quotation', $where);
+		$row	= $query->row();
 		
         $this->MasterModel->edit('quotation', $where, array('quotation_status' => 2));
 		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Penawaran '.strtoupper($row->quotation_number).' berhasil dihapus !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('quotation');
+    }
+	
+	public function prints($id)
+    {
+		$where	= ['quotation_id' => $this->uri->segment(3)];
+        $query	= $this->MasterModel->getBy('quotation', $where);
+		$row	= $query->row();
+		
+		$detail	= $this->MasterModel->getBy('quotation_detail', $where)->result_array();
+		
+        // Generate PDF
+        $pdf = new PDF();
+        // $pdf->AddPage('L', array(140, 216));
+        $pdf->AddPage('L', 'A5');
+        $pdf->SetFont('Arial', '',10);
+
+		$pdf->SetXY(5,10);
+		$pdf->SetFont('Arial','B',15);
+		$pdf->Cell(200, 6, 'PENAWARAN', 0, 1, 'R');
+		
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(140, 5, '', 0, 0, 'R');
+		$pdf->Cell(25, 5, 'Nomor ', 1, 0, 'R');
+		$pdf->Cell(30, 5, $row->quotation_number, 1, 1, 'L');
+		
+		$pdf->Cell(140, 5, '', 0, 0, 'R');
+		$pdf->Cell(25, 5, 'Tanggal ', 1, 0, 'R');
+		$pdf->Cell(30, 5, date('d/M/Y', strtotime($row->quotation_date)), 1, 1, 'L');
+		
+		$pdf->Cell(140, 5, '', 0, 0, 'R');
+		$pdf->Cell(25, 5, 'Customer ', 1, 0, 'R');
+		$pdf->Cell(30, 5, $row->customer_desc, 1, 1, 'L');
+		$pdf->Ln(6);
+		
+		$pdf->SetX(10);
+		
+		$pdf->SetFont('Arial','BU',12);
+        $pdf->Cell(190, 6, "DETAIL PENAWARAN", 0, 0, 'C');
+		$pdf->Ln(8);
+		
+		$pdf->SetFont('Arial','B',10);
+		$pdf->SetFillColor(140);
+		$pdf->SetTextColor(255);
+		
+		$header	= array('No.', 'Nama Produk', 'Qty', 'Unit', 'Harga Satuan', 'Harga Total');
+		$width	= array(10, 80, 15, 15, 35, 35);
+		
+		for($i = 0; $i < count($header); $i++)
+			$pdf->Cell($width[$i], 7, $header[$i], 1, 0, 'C', true);
+		$pdf->Ln();
+		
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetTextColor(0);
+		
+		foreach($detail as $key => $value)
+		{
+			$pdf->Cell($width[0], 6, $key + 1, 'LR', 0, 'C');
+			$pdf->Cell($width[1], 6, ucfirst($value['detail_item_desc']), 'LR', 0);
+			$pdf->Cell($width[2], 6, $value['detail_item_qty'], 'LR', 0, 'C');
+			$pdf->Cell($width[3], 6, $value['detail_item_unit'], 'LR', 0, 'C');
+			$pdf->Cell(5, 6, 'Rp', 'L', 0);
+			$pdf->Cell(30, 6, number_format($value['detail_item_price']), 'R', 0, 'R');
+			$pdf->Cell(5, 6, 'Rp', 'L', 0);
+			$pdf->Cell(30, 6, number_format($value['detail_item_price'] * $value['detail_item_qty']), 'R', 0, 'R');
+			$pdf->Ln();
+		}
+		
+		if(count($detail) < 10)
+		{
+			$a = 10 - count($detail);
+			for($i = 1; $i < $a; $i++)
+			{
+				$pdf->Cell($width[0], 6, '', 'LR', 0);
+				$pdf->Cell($width[1], 6, '', 'LR', 0);
+				$pdf->Cell($width[2], 6, '', 'LR', 0);
+				$pdf->Cell($width[3], 6, '', 'LR', 0);
+				$pdf->Cell($width[4], 6, '', 'LR', 0);
+				$pdf->Cell($width[5], 6, '', 'LR', 0);
+				$pdf->Ln();
+			}
+		}
+		
+		$pdf->SetFont('Arial','B',10);
+		$pdf->Cell(155, 7, '', 'T', 0, 'R');
+		$pdf->Cell(5, 7, 'Rp', 'LTB', 0);
+		$pdf->Cell(30, 7, number_format($row->quotation_total), 'RTB', 1, 'R');
+
+        $pdf->Output('1.pdf', 'I');
+		exit();
     }
 }

@@ -34,7 +34,7 @@ var table = $("table#table_data").DataTable({
 		  invoice_status = "";
 		}
 		
-		return '<a href="quotation/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="quotation/invoice/' + data + '" class="btn btn-success btn-xs" onclick="return confirm(\'Anda yakin ingin membuat invoice dari penawaran ini ?\')" ' + invoice_status + '><i class="fa fa-check"></i></a>&nbsp;<a href="quotation/print/' + data + '" class="btn btn-warning btn-xs"><i class="fa fa-print"></i></a>&nbsp;<a href="quotation/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
+		return '<a href="quotation/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="quotation/invoice/' + data + '" class="btn btn-success btn-xs" onclick="return confirm(\'Anda yakin ingin membuat invoice dari penawaran ini ?\')" ' + invoice_status + '><i class="fa fa-check"></i></a>&nbsp;<a href="quotation/prints/' + data + '" class="btn btn-warning btn-xs" target="_blank"><i class="fa fa-print"></i></a>&nbsp;<a href="quotation/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
   ],

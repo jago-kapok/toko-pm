@@ -5,6 +5,9 @@
 	  <a href="invoice/formCreate" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>
 	    &nbsp;&nbsp;Tambah
 	  </a>
+	  <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#messageInvoice"><i class="fa fa-plus-square"></i>
+	    &nbsp;&nbsp;Tambah
+	  </a>
 	</div>
 	<div class="col-md-4 pull-right">
 	  <div class="input-group">
@@ -35,4 +38,26 @@
       </tr>
     </thead>
   </table>
+</div>
+
+<div class="modal fade" id="messageInvoice" data-backdrop="static" role="dialog">
+  <div class="modal-dialog modal-sm">
+	<div class="modal-content">
+	  <div class="modal-header bg-success">
+		<h5 class="modal-title"><span>Notifikasi</span></h5>
+	  </div>
+	  <div>
+		<div class="modal-body">
+		  <center>
+			<h2><i class="fa fa-check-circle"></i></h2>
+			<h6><i>Transaksi berhasil disimpan !</i></h6>
+		  </center>
+		</div>
+		<div class="modal-footer" style="justify-content:center">
+		  <button type="button" id="closeMessageInvoice" class="btn btn-danger btn-sm btn-form"><i class="fa fa-times-circle">&nbsp;&nbsp;</i>Tutup</button>
+		  <button type="button" id="printInvoice" class="btn btn-primary btn-sm btn-form"><i class="fa fa-print">&nbsp;&nbsp;</i>Cetak</button>
+		</div>
+	  </div>
+	</div>
+  </div>
 </div>

@@ -5,9 +5,11 @@
         <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-file"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text"><b>Total Penawaran (Rp)</b></span>
-		  <a href="<?= base_url('transaction/export_visited'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= number_format($quotation->quotation_total); ?></span>
+          <span class="info-box-text"><b>Total Penawaran</b></span>
+		  <a href="javascript:void(0)" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
+          <span class="info-box-number" style="font-size:25px">
+			<span class="text-primary h6"><i>Rp</i></span> <?= number_format($quotation->quotation_total); ?>
+		  </span>
         </div>
       </div>
     </div>
@@ -16,9 +18,11 @@
         <span class="info-box-icon bg-success elevation-1"><i class="fa fa-file-invoice-dollar"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text"><b>Total Penjualan (Rp)</b></span>
-		  <a href="<?= base_url('transaction/export_not_paid'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= number_format($invoice->invoice_total); ?></span>
+          <span class="info-box-text"><b>Total Penjualan</b></span>
+		  <a href="javascript:void(0)" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
+          <span class="info-box-number" style="font-size:25px">
+			<span class="text-primary h6"><i>Rp</i></span> <?= number_format($invoice->invoice_total); ?>
+		  </span>
         </div>
       </div>
     </div>
@@ -30,9 +34,11 @@
         <span class="info-box-icon bg-info elevation-1"><i class="fa fa-shopping-cart"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text"><b>Total Pembelian (Rp)</b></span>
-		  <a href="<?= base_url('transaction/export_paid'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= number_format($purchase->purchase_total); ?></span>
+          <span class="info-box-text"><b>Total Pembelian</b></span>
+		  <a href="javascript:void(0)" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
+          <span class="info-box-number" style="font-size:25px">
+			<span class="text-primary h6"><i>Rp</i></span> <?= number_format($purchase->purchase_total); ?>
+		  </span>
         </div>
       </div>
     </div>
@@ -42,8 +48,8 @@
 
         <div class="info-box-content">
           <span class="info-box-text"><b>Jumlah Produk</b></span>
-		  <a href="<?= base_url('transaction/export_blocked'); ?>" style="float:right; margin-top:-20px"><i class="fa fa-cubes"></i></a>
-          <span class="info-box-number" style="font-size:20px"><?= $item; ?></span>
+		  <a href="javascript:void(0)" style="float:right; margin-top:-20px"><i class="fa fa-cubes"></i></a>
+          <span class="info-box-number" style="font-size:25px"><?= $item; ?></span>
         </div>
       </div>
     </div>
@@ -97,8 +103,8 @@
 						  <td>
 							<a href="javascript:void(0)"><?php echo $row->invoice_number ?></a><br><i><?php echo $row->customer_name ?></i>
 						  </td>
-						  <td align="right" style="vertical-align:middle; font-size:15px"><b><?php echo number_format($row->invoice_total) ?></b></td>
-						  <td align="right" style="vertical-align:middle; font-size:15px"><b><?php echo number_format($row->invoice_total - $row->invoice_profit) ?></b></td>
+						  <td align="right" style="vertical-align:middle; font-size:15px">Rp <b><?php echo number_format($row->invoice_total) ?></b></td>
+						  <td align="right" style="vertical-align:middle; font-size:15px">Rp <b><?php echo number_format($row->invoice_total - $row->invoice_profit) ?></b></td>
 						</tr>
 					  <?php } ?>
 					</tbody>

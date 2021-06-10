@@ -28,7 +28,7 @@ var table = $("table#table_data").DataTable({
 	{
 	  data: "invoice_id",
 	  render: function(data, type, row){
-		return '<a href="invoice/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="invoice/print/' + data + '" class="btn btn-warning btn-xs"><i class="fa fa-print"></i></a>&nbsp;<a href="invoice/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
+		return '<a href="invoice/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="invoice/prints/' + data + '" class="btn btn-warning btn-xs" target="_blank"><i class="fa fa-print"></i></a>&nbsp;<a href="invoice/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus data ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
   ],
@@ -272,5 +272,36 @@ $("#invoice_discount").on("keyup", function(){
   }
 	
   sumTotal();
+});
+
+/* ============================ */
+/* After invoice saved				
+/* ============================ */
+
+$(document).ready(function(){
+  <?php if(isset($_SESSION['message_invoice']) && $_SESSION['message_invoice'] != 0){ ?>
+    $('#messageInvoice').modal("show");
+  <?php } ?>
+});
+
+/* ============================ */
+/* Close message invoice				
+/* ============================ */
+
+$('#closeMessageInvoice').click(function(){
+  <?php $_SESSION['message_invoice'] = 0; ?>
+  $('#messageInvoice').modal("hide");
+});
+
+/* ============================ */
+/* Print invoice				
+/* ============================ */
+
+$('#printInvoice').click(function(){
+  var id = <?php echo $_SESSION['invoice_id'] ?>;
+  window.open("invoice/prints/" + id);
+  
+  <?php $_SESSION['message_invoice'] = 0; ?>
+  $('#messageInvoice').modal("hide");
 });
 </script>

@@ -7,12 +7,14 @@ class Invoice extends CI_Controller
     {
         parent::__construct();
 		authentication();
+		
+		$this->load->library('PDF');
     }
 
     public function index()
     {
         $data['title'] = 'Data Penjualan';
-
+        
         $this->load->view('templates/header', $data);
         $this->load->view('invoice/index', $data);
         $this->load->view('templates/footer');
@@ -142,6 +144,8 @@ class Invoice extends CI_Controller
 		
 		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data Penjualan berhasil disimpan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		
+		$this->session->set_userdata('message_invoice', 1);
+		$this->session->set_userdata('invoice_id', $invoice_id);
 		redirect('invoice');
 	}
 
@@ -216,4 +220,87 @@ class Invoice extends CI_Controller
 		
 		$this->MasterModel->add('stock_history', $data);
 	}
+	
+	public function prints($id)
+    {
+		$where	= ['invoice_id' => $this->uri->segment(3)];
+        $query	= $this->MasterModel->getBy('invoice', $where);
+		$row	= $query->row();
+		
+		$detail	= $this->MasterModel->getBy('invoice_detail', $where)->result_array();
+		
+        // Generate PDF
+        $pdf = new PDF();
+        $pdf->AddPage('L', array(140, 216));
+        // $pdf->AddPage('L', 'A5');
+        $pdf->setMargins(5,0,0);
+
+		$pdf->SetXY(5,10);
+		$pdf->SetFont('Arial','BU',12);
+		$pdf->Cell(205, 6, 'INVOICE', 0, 1, 'R');
+		
+		$pdf->SetFont('Arial','',9);
+		$pdf->Cell(150, 5, '', 0, 0, 'R');
+		$pdf->Cell(25, 5, 'Nomor ', 0, 0, 'R');
+		$pdf->Cell(30, 5, ': '.$row->invoice_number, 0, 1, 'L');
+		
+		$pdf->Cell(150, 5, '', 0, 0, 'R');
+		$pdf->Cell(25, 5, 'Tanggal ', 0, 0, 'R');
+		$pdf->Cell(30, 5, ': '.date('d M Y', strtotime($row->invoice_date)), 0, 1, 'L');
+		
+		$pdf->Cell(150, 5, '', 0, 0, 'R');
+		$pdf->Cell(25, 5, 'Customer ', 0, 0, 'R');
+		$pdf->Cell(30, 5, ': '.$row->customer_desc, 0, 1, 'L');
+		$pdf->Ln(6);
+		
+		$pdf->SetFont('Arial','B',9);
+		$pdf->SetFillColor(140);
+		$pdf->SetTextColor(255);
+		
+		$header	= array('No.', 'Deskripsi', 'Qty', 'Unit', 'Harga Satuan', 'Total');
+		$width	= array(10, 110, 12.5, 12.5, 30, 30);
+		
+		for($i = 0; $i < count($header); $i++)
+			$pdf->Cell($width[$i], 6, $header[$i], 1, 0, 'C', true);
+		$pdf->Ln();
+		
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetTextColor(0);
+		
+		foreach($detail as $key => $value)
+		{
+			$pdf->Cell($width[0], 4, $key + 1, 'LR', 0, 'C');
+			$pdf->Cell($width[1], 4, ucfirst($value['detail_item_desc']), 'LR', 0);
+			$pdf->Cell($width[2], 4, $value['detail_item_qty'], 'LR', 0, 'C');
+			$pdf->Cell($width[3], 4, $value['detail_item_unit'], 'LR', 0, 'C');
+			$pdf->Cell(5, 4, '', 'L', 0);
+			$pdf->Cell(25, 4, number_format($value['detail_item_price']), 'R', 0, 'R');
+			$pdf->Cell(5, 4, '', 'L', 0);
+			$pdf->Cell(25, 4, number_format($value['detail_item_price'] * $value['detail_item_qty']), 'R', 0, 'R');
+			$pdf->Ln();
+		}
+		
+		if(count($detail) < 10)
+		{
+			$a = 10 - count($detail);
+			for($i = 1; $i < $a; $i++)
+			{
+				$pdf->Cell($width[0], 4, '', 'LR', 0);
+				$pdf->Cell($width[1], 4, '', 'LR', 0);
+				$pdf->Cell($width[2], 4, '', 'LR', 0);
+				$pdf->Cell($width[3], 4, '', 'LR', 0);
+				$pdf->Cell($width[4], 4, '', 'LR', 0);
+				$pdf->Cell($width[5], 4, '', 'LR', 0);
+				$pdf->Ln();
+			}
+		}
+		
+		$pdf->SetFont('Arial','B',9);
+		$pdf->Cell(175, 7, '', 'T', 0, 'R');
+		$pdf->Cell(5, 7, 'Rp', 'LTB', 0);
+		$pdf->Cell(25, 7, number_format($row->invoice_total), 'RTB', 1, 'R');
+
+        $pdf->Output('1.pdf', 'I');
+		exit();
+    }
 }

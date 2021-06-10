@@ -128,8 +128,8 @@
 		  </table>
 		  <br>
 		  <div class="form-row mb-1">
-			<span class="col-md-1 col-form-label"><i>Catatan</i></span>
-			<div class="col-md-11">
+			<span class="col-md-2 col-form-label"><i>Sales / Mekanik</i></span>
+			<div class="col-md-3">
 			  <input name="invoice_notes" class="form-control form-control-sm">
 			</div>
 		  </div>

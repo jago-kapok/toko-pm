@@ -24,7 +24,8 @@ var table = $("table#table_data").DataTable({
 	{data: "invoice_number",	className: "text-left"},
 	{data: "customer_desc",		className: "text-left"},
 	{data: "invoice_total",		className: "text-right"},
-	{data: "status_desc",		className: "text-left"},
+	{data: "invoice_discount",	className: "text-right"},
+	{data: "invoice_notes",		className: "text-left"},
 	{
 	  data: "invoice_id",
 	  render: function(data, type, row){
@@ -298,7 +299,9 @@ $('#closeMessageInvoice').click(function(){
 /* ============================ */
 
 $('#printInvoice').click(function(){
-  var id = <?php echo $_SESSION['invoice_id'] ?>;
+  <?php if(isset($_SESSION['invoice_id'])){ ?>
+    var id = <?php echo $_SESSION['invoice_id'] ?>;
+  <?php } ?>
   window.open("invoice/prints/" + id);
   
   <?php $_SESSION['message_invoice'] = 0; ?>

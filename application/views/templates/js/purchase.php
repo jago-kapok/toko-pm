@@ -27,7 +27,7 @@ var table = $("table#table_data").DataTable({
 	{
 	  data: "purchase_id",
 	  render: function(data, type, row){
-		return '<a href="purchase/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="purchase/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus transaksi ini ?\')"><i class="fa fa-trash"></i></a>';
+		return '<a href="purchase/update/' + data + '" class="btn btn-info btn-xs fa fa-edit"></a>&nbsp;<a href="purchase/prints/' + data + '" class="btn btn-warning btn-xs fa fa-search" target="_blank"></a>&nbsp;<a href="purchase/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Anda yakin ingin menghapus transaksi ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
   ],

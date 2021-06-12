@@ -52,7 +52,7 @@ class Admin extends CI_Controller
 		// $data['harmet_hari'] = round((($harmet_tahun / 365) / $harmet_target->hari_harmet_target) * 100, 3);
 		// $data['harmet_hari_terealisasi'] = round($harmet_tahun / 365, 3);
 		
-		$data['recent_invoice'] = $this->db->query("SELECT invoice_number, invoice_date, customer_name, invoice_total, SUM(detail_item_buy * detail_item_qty) AS invoice_profit	FROM invoice JOIN invoice_detail ON invoice.invoice_id = invoice_detail.invoice_id JOIN customer ON invoice.customer_id = customer.customer_id WHERE invoice.invoice_status = 1 GROUP BY invoice.invoice_id ORDER BY invoice.invoice_id DESC LIMIT 5")->result();
+		$data['recent_invoice'] = $this->db->query("SELECT invoice.invoice_id, invoice_number, invoice_date, customer_name, invoice_total, SUM(detail_item_buy * detail_item_qty) AS invoice_profit	FROM invoice JOIN invoice_detail ON invoice.invoice_id = invoice_detail.invoice_id JOIN customer ON invoice.customer_id = customer.customer_id WHERE invoice.invoice_status = 1 GROUP BY invoice.invoice_id ORDER BY invoice.invoice_id DESC LIMIT 5")->result();
 		
         $this->load->view('templates/header', $data);
         $this->load->view('admin/index', $data);

@@ -5,8 +5,8 @@
 	  <a href="invoice/formCreate" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>
 	    &nbsp;&nbsp;Tambah
 	  </a>
-	  <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#messageInvoice"><i class="fa fa-plus-square"></i>
-	    &nbsp;&nbsp;Tambah
+	  <a href="javascript:void(0)" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#filterInvoiceReport"><i class="fa fa-file"></i>
+	    &nbsp;&nbsp;Laporan
 	  </a>
 	</div>
 	<div class="col-md-4 pull-right">
@@ -30,10 +30,11 @@
       <tr>
 		<th width="5">NO.</th>
         <th>TANGGAL</th>
-        <th>PENJUALAN</th>
+        <th>INVOICE</th>
         <th>PELANGGAN</th>
         <th class="text-left">TOTAL (Rp)</th>
-        <th>STATUS</th>
+        <th class="text-left">DISKON (Rp)</th>
+        <th>SALES / MEKANIK</th>
         <th width="100" class="text-left">#</th>
       </tr>
     </thead>

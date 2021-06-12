@@ -1,7 +1,7 @@
 <?php
 require('fpdf.php');
 
-class PDF extends FPDF {
+class PDFReport extends FPDF {
 
     function __construct() {
         parent::__construct();
@@ -10,16 +10,13 @@ class PDF extends FPDF {
     function Header(){
 		$this->SetXY(5,5);
 		$this->SetFont('Arial','B',15);
-		$this->Cell(169, 6, 'PANDU MULYA', 0, 2, 'L');
+		$this->Cell(200, 6, 'LAPORAN '.$_SESSION['report_title'], 0, 2, 'C');
 
-		$this->SetFont('Arial','I',9);
-		$this->Cell(169, 5, 'Jalan Guyangan - Berbek', 0, 2, 'L');
-		$this->Cell(169, 5, 'Ds. Gandu Kec. Bagor Kab. Nganjuk', 0, 2, 'L');
-		$this->Cell(169, 5, 'Telp. 0822 2933 2933', 0, 2, 'L');
+		$this->SetFont('Arial','I',8);
+		$this->Cell(100, 5, 'Periode : '.date('d M Y', strtotime($_SESSION['start_date'])) .' - '.date('d M Y', strtotime($_SESSION['to_date'])), 0, 1, 'L');
 		
-		$this->Line(5, 33, 210, 33);
-		$this->Line(5, 34, 210, 34);
-		$this->Ln();
+		$this->Line(5, $this->getY(), 205, $this->getY());
+		$this->Line(5, $this->getY() + 0.5, 205, $this->getY() + 0.5);
 	}
 
 	function Footer()

@@ -58,7 +58,6 @@ class Stock extends CI_Controller
 		
 		$data = array(
 			'stock_min'			=> $stock_min,
-			'stock_max'			=> $stock_max,
 			'stock_exist'		=> $stock_exist,
 			'stock_updated_date'=> $stock_updated_date
 		);

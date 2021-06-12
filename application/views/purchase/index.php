@@ -5,6 +5,9 @@
 	  <a href="purchase/formCreate" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>
 	    &nbsp;&nbsp;Tambah
 	  </a>
+	  <a href="javascript:void(0)" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#filterPurchaseReport"><i class="fa fa-file"></i>
+	    &nbsp;&nbsp;Laporan
+	  </a>
 	</div>
 	<div class="col-md-4 pull-right">
 	  <div class="input-group">
@@ -30,7 +33,7 @@
         <th>TRANSAKSI</th>
         <th>SUPPLIER</th>
         <th class="text-left">TOTAL (Rp)</th>
-        <th width="50">#</th>
+        <th width="100">#</th>
       </tr>
     </thead>
   </table>

@@ -8,7 +8,7 @@
           <span class="info-box-text"><b>Total Penawaran</b></span>
 		  <a href="javascript:void(0)" style="float:right; margin-top:-20px"><i class="fa fa-money-bill"></i></a>
           <span class="info-box-number" style="font-size:25px">
-			<span class="text-primary h6"><i>Rp</i></span> <?= number_format($quotation->quotation_total); ?>
+			<span class="text-primary h6"><i>Rp</i></span> <?= number_format($purchase->purchase_total); ?>
 		  </span>
         </div>
       </div>
@@ -87,13 +87,13 @@
             <div class="col-md-5">
 			  <div class="row">
 			    <div class="col-md-12">
-                  <p class="text-center">
-                    <strong>Transaksi Penjualan Terakhir</strong>
+                  <p class="text-center mb-1">
+                    <b>Transaksi Penjualan Terakhir</b>
                   </p>
 
                   <table class="table" width="100%">
 					<thead class="bg-success">
-					  <th class="w-25">Transaksi</th>
+					  <th class="w-25">Invoice</th>
 					  <th class="w-25">Total</th>
 					  <th class="w-25">Profit</th>
 					</thead>
@@ -101,10 +101,13 @@
 					  <?php foreach($recent_invoice as $row) { ?>
 						<tr>
 						  <td>
-							<a href="javascript:void(0)"><?php echo $row->invoice_number ?></a><br><i><?php echo $row->customer_name ?></i>
+							<a href="invoice/prints/<?php echo $row->invoice_id ?>" target="_blank">
+							  <?php echo $row->invoice_number ?>
+							</a>
+							<br><i><?php echo $row->customer_name ?></i>
 						  </td>
-						  <td align="right" style="vertical-align:middle; font-size:15px">Rp <b><?php echo number_format($row->invoice_total) ?></b></td>
-						  <td align="right" style="vertical-align:middle; font-size:15px">Rp <b><?php echo number_format($row->invoice_total - $row->invoice_profit) ?></b></td>
+						  <td align="right" style="vertical-align:middle; font-size:15px"><i style="font-size:12px">Rp </i> <b><?php echo number_format($row->invoice_total) ?></b></td>
+						  <td align="right" style="vertical-align:middle; font-size:15px"><i style="font-size:12px">Rp </i> <b><?php echo number_format($row->invoice_total - $row->invoice_profit) ?></b></td>
 						</tr>
 					  <?php } ?>
 					</tbody>

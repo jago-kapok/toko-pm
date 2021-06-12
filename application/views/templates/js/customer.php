@@ -30,8 +30,8 @@ var table = $("table#table_data").DataTable({
 		return '<a href="javascript:void(0)" class="btn btn-info btn-xs fa fa-edit" data-toggle="modal" data-target="#customer_update" data-customer_id="' + data + '" data-customer_code="' + row.customer_code + '" data-customer_name="' + row.customer_name + '" data-customer_address="' + row.customer_address + '" data-customer_phone="' + row.customer_phone + '"></a>&nbsp;<a href="customer/delete/' + data + '" class="btn btn-danger btn-xs" onclick="return confirm(\'Hapus data ini ?\')"><i class="fa fa-trash"></i></a>';
 	  }
 	}
-	
   ],
+  order: [[5, "DESC"]],
   rowCallback: function(row, data, iDisplayIndex){
 	var info 	= this.fnPagingInfo();
 	var page 	= info.iPage;

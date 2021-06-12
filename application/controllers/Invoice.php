@@ -46,8 +46,13 @@ class Invoice extends CI_Controller
 					return number_format($d);
 				}
 			],
-			["db" => "status_desc",		"dt" => "status_desc"],
-			["db" => "invoice_id",	"dt" => "invoice_id"]
+			["db" => "invoice_discount","dt" => "invoice_discount",
+				"formatter" => function($d, $row){
+					return number_format($d);
+				}
+			],
+			["db" => "invoice_notes",	"dt" => "invoice_notes"],
+			["db" => "invoice_id",		"dt" => "invoice_id"]
 		];
 		
 		$_where	= "invoice_status != 2";
@@ -100,6 +105,7 @@ class Invoice extends CI_Controller
 			'invoice_discount'		=> $invoice_discount,
 			'invoice_notes'			=> $invoice_notes,
 			'invoice_status'		=> 1,
+			'invoice_created_by'	=> $this->session->userdata('user_id'),
 			'invoice_modified_date'	=> date('Y-m-d H:i:s')
 		);
 	 
@@ -221,7 +227,7 @@ class Invoice extends CI_Controller
 		$this->MasterModel->add('stock_history', $data);
 	}
 	
-	public function prints($id)
+	public function prints()
     {
 		$where	= ['invoice_id' => $this->uri->segment(3)];
         $query	= $this->MasterModel->getBy('invoice', $where);
@@ -240,16 +246,16 @@ class Invoice extends CI_Controller
 		$pdf->Cell(205, 6, 'INVOICE', 0, 1, 'R');
 		
 		$pdf->SetFont('Arial','',9);
-		$pdf->Cell(150, 5, '', 0, 0, 'R');
-		$pdf->Cell(25, 5, 'Nomor ', 0, 0, 'R');
+		$pdf->Cell(160, 5, '', 0, 0, 'R');
+		$pdf->Cell(15, 5, 'Nomor ', 0, 0, 'L');
 		$pdf->Cell(30, 5, ': '.$row->invoice_number, 0, 1, 'L');
 		
-		$pdf->Cell(150, 5, '', 0, 0, 'R');
-		$pdf->Cell(25, 5, 'Tanggal ', 0, 0, 'R');
+		$pdf->Cell(160, 5, '', 0, 0, 'R');
+		$pdf->Cell(15, 5, 'Tanggal ', 0, 0, 'L');
 		$pdf->Cell(30, 5, ': '.date('d M Y', strtotime($row->invoice_date)), 0, 1, 'L');
 		
-		$pdf->Cell(150, 5, '', 0, 0, 'R');
-		$pdf->Cell(25, 5, 'Customer ', 0, 0, 'R');
+		$pdf->Cell(160, 5, '', 0, 0, 'R');
+		$pdf->Cell(15, 5, 'Customer ', 0, 0, 'L');
 		$pdf->Cell(30, 5, ': '.$row->customer_desc, 0, 1, 'L');
 		$pdf->Ln(6);
 		
@@ -267,6 +273,13 @@ class Invoice extends CI_Controller
 		$pdf->SetFont('Arial','',9);
 		$pdf->SetTextColor(0);
 		
+		$pdf->Cell(10, 0.25, '', 'LR', 0);
+		$pdf->Cell(110, 0.25, '', 'LR', 0);
+		$pdf->Cell(12.5, 0.25, '', 'LR', 0);
+		$pdf->Cell(12.5, 0.25, '', 'LR', 0);
+		$pdf->Cell(30, 0.25, '', 'LR', 0);
+		$pdf->Cell(30, 0.25, '', 'LR', 1);
+		
 		foreach($detail as $key => $value)
 		{
 			$pdf->Cell($width[0], 4, $key + 1, 'LR', 0, 'C');
@@ -280,9 +293,9 @@ class Invoice extends CI_Controller
 			$pdf->Ln();
 		}
 		
-		if(count($detail) < 10)
+		if(count($detail) <= 12)
 		{
-			$a = 10 - count($detail);
+			$a = 14 - count($detail);
 			for($i = 1; $i < $a; $i++)
 			{
 				$pdf->Cell($width[0], 4, '', 'LR', 0);
@@ -295,10 +308,20 @@ class Invoice extends CI_Controller
 			}
 		}
 		
+		$discount = round(($row->invoice_discount / ($row->invoice_total + $row->invoice_discount)) * 100, 2);
+		
+		$pdf->SetFont('Arial','',9);
+		$pdf->Cell(175, 5, 'Sub Total ', 'T', 0, 'R');
+		$pdf->Cell(5, 5, 'Rp', 'LTB', 0);
+		$pdf->Cell(25, 5, number_format($row->invoice_total + $row->invoice_discount), 'RTB', 1, 'R');
+		$pdf->Cell(175, 5, 'Diskon ('.$discount.'%)', '', 0, 'R');
+		$pdf->Cell(5, 5, 'Rp', 'LB', 0);
+		$pdf->Cell(25, 5, number_format($row->invoice_discount), 'RB', 1, 'R');
+		
 		$pdf->SetFont('Arial','B',9);
-		$pdf->Cell(175, 7, '', 'T', 0, 'R');
-		$pdf->Cell(5, 7, 'Rp', 'LTB', 0);
-		$pdf->Cell(25, 7, number_format($row->invoice_total), 'RTB', 1, 'R');
+		$pdf->Cell(175, 5, 'Total Invoice ', '', 0, 'R');
+		$pdf->Cell(5, 5, 'Rp', 'LB', 0);
+		$pdf->Cell(25, 5, number_format($row->invoice_total), 'RB', 1, 'R');	
 
         $pdf->Output('1.pdf', 'I');
 		exit();

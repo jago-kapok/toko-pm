@@ -32,6 +32,7 @@ var table = $("table#table_data").DataTable({
 	}
 	
   ],
+  order: [[5, "DESC"]],
   rowCallback: function(row, data, iDisplayIndex){
 	var info 	= this.fnPagingInfo();
 	var page 	= info.iPage;

@@ -49,31 +49,51 @@
 	$('#searching').on('keyup', function(){
 	  table.search(this.value).draw();
     });
+    
+    /* ============================ */
+	/* Purchase Report					
+	/* ============================ */
+	$('#purchase_report').click(function(){
+	  var start_date	= $('.purchase').find('#start_date').val();
+	  var to_date		= $('.purchase').find('#to_date').val();
+	  var customer_id	= $('.purchase').find('#customer_id').val();
+	  
+	  window.open("report/printPurchase/" + start_date + '/' + to_date + '/' + customer_id);
+	  $('#filterPurchaseReport').modal('hide');
+	});
 	
 	/* ============================ */
-	/* get JSON							
+	/* Invoice Report					
 	/* ============================ */
-	$('select[name=id_pelanggan]').change(function(){
-	  if(this.value == 'New'){
-		$('input[name=nama_pelanggan]').val('');
-		$('input[name=alamat_pelanggan]').val('');
-		$('input[name=nama_pelanggan]').attr('disabled', false);
-	    $('input[name=alamat_pelanggan]').attr('disabled', false);
-	  } else {
-		$('input[name=nama_pelanggan]').val('');
-		$('input[name=alamat_pelanggan]').val('');
-		$('input[name=nama_pelanggan]').attr('disabled', false);
-		$('input[name=alamat_pelanggan]').attr('disabled', false);
-		  
-		$.getJSON("customer/data/" + this.value, function(data){
-		  $.each(data, function(key, value){
-			$('input[name=nama_pelanggan]').val(value.nama_pelanggan);
-			$('input[name=alamat_pelanggan]').val(value.alamat_pelanggan);
-			$('input[name=nama_pelanggan]').attr('disabled', true);
-			$('input[name=alamat_pelanggan]').attr('disabled', true);
-		  });
-		});
-	  }
+	$('#invoice_report').click(function(){
+	  var start_date	= $('.invoice').find('#start_date').val();
+	  var to_date		= $('.invoice').find('#to_date').val();
+	  var customer_id	= $('.invoice').find('#customer_id').val();
+	  
+	  window.open("report/printInvoice/" + start_date + '/' + to_date + '/' + customer_id);
+	  $('#filterInvoiceReport').modal('hide');
+	});
+	
+	/* ============================ */
+	/* Invoice Service Report					
+	/* ============================ */
+	$('#invoice_service_report').click(function(){
+	  var start_date	= $('.invoice_service').find('#start_date').val();
+	  var to_date		= $('.invoice_service').find('#to_date').val();
+	  
+	  window.open("report/printInvoiceService/" + start_date + '/' + to_date);
+	  $('#filterInvoiceServiceReport').modal('hide');
+	});
+	
+	/* ============================ */
+	/* Profit Report					
+	/* ============================ */
+	$('#profit_report').click(function(){
+	  var start_date	= $('.profit').find('#start_date').val();
+	  var to_date		= $('.profit').find('#to_date').val();
+	  
+	  window.open("report/printProfit/" + start_date + '/' + to_date);
+	  $('#filterProfitReport').modal('hide');
 	});
   </script>
 </body>

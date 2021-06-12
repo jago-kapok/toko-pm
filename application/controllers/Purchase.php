@@ -8,6 +8,8 @@ class Purchase extends CI_Controller
     {
         parent::__construct();
 		authentication();
+		
+		$this->load->library('PDFPurchase');
     }
 
     public function index()
@@ -48,7 +50,7 @@ class Purchase extends CI_Controller
 			["db" => "purchase_id",		"dt" => "purchase_id"]
 		];
 		
-		$_where	= "purchase_status IS NULL";
+		$_where	= "purchase_status = 0";
 		$_join	= "JOIN supplier ON purchase.supplier_id = supplier.supplier_id";
 
 		echo json_encode(
@@ -78,6 +80,7 @@ class Purchase extends CI_Controller
 			'purchase_date'				=> $purchase_date,
 			'supplier_id'				=> $supplier_id,
 			'purchase_total'			=> $purchase_total,
+			'purchase_status'			=> 0,
 			'purchase_modified_date'	=> date('Y-m-d H:i:s')
 		);
 	 
@@ -191,4 +194,89 @@ class Purchase extends CI_Controller
 		
 		$this->MasterModel->add('stock_history', $data);
 	}
+	
+	public function prints()
+    {
+		$where	= ['purchase_id' => $this->uri->segment(3)];
+        $query	= $this->MasterModel->getBy('purchase', $where);
+		$row	= $query->row();
+		
+		$supplier = $this->MasterModel->getBy('supplier', ['supplier_id'=>$row->supplier_id])->row();
+		
+		$detail	= $this->MasterModel->getBy('purchase_detail', $where)->result_array();
+		
+        // Generate PDF
+        $pdf = new PDFPurchase();
+        $pdf->AddPage('P', array(280, 216));
+        $pdf->setMargins(5,0,0);
+
+		$pdf->SetX(5);
+		$pdf->SetFont('Arial','',9);
+		$pdf->Cell(15, 5, 'Nomor ', 0, 0, 'L');
+		$pdf->Cell(30, 5, ': '.$row->purchase_number, 0, 1, 'L');
+		
+		$pdf->Cell(15, 5, 'Tanggal ', 0, 0, 'L');
+		$pdf->Cell(30, 5, ': '.date('d M Y', strtotime($row->purchase_date)), 0, 1, 'L');
+		
+		$pdf->Cell(15, 5, 'Supplier ', 0, 0, 'L');
+		$pdf->Cell(30, 5, ': '.$supplier->supplier_name, 0, 1, 'L');
+		$pdf->Ln();
+		
+		$pdf->SetFont('Arial','B',9);
+		$pdf->SetFillColor(140);
+		$pdf->SetTextColor(255);
+		
+		$header	= array('No.', 'Deskripsi', 'Qty', 'Unit', 'Harga Satuan', 'Total');
+		$width	= array(10, 110, 12.5, 12.5, 30, 30);
+		
+		for($i = 0; $i < count($header); $i++)
+			$pdf->Cell($width[$i], 6, $header[$i], 1, 0, 'C', true);
+		$pdf->Ln();
+		
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetTextColor(0);
+		
+		$pdf->Cell(10, 0.25, '', 'LR', 0);
+		$pdf->Cell(110, 0.25, '', 'LR', 0);
+		$pdf->Cell(12.5, 0.25, '', 'LR', 0);
+		$pdf->Cell(12.5, 0.25, '', 'LR', 0);
+		$pdf->Cell(30, 0.25, '', 'LR', 0);
+		$pdf->Cell(30, 0.25, '', 'LR', 1);
+		
+		foreach($detail as $key => $value)
+		{
+			$pdf->Cell($width[0], 4, $key + 1, 'LR', 0, 'C');
+			$pdf->Cell($width[1], 4, ucfirst($value['detail_item_desc']), 'LR', 0);
+			$pdf->Cell($width[2], 4, $value['detail_item_qty'], 'LR', 0, 'C');
+			$pdf->Cell($width[3], 4, $value['detail_item_unit'], 'LR', 0, 'C');
+			$pdf->Cell(5, 4, '', 'L', 0);
+			$pdf->Cell(25, 4, number_format($value['detail_item_price']), 'R', 0, 'R');
+			$pdf->Cell(5, 4, '', 'L', 0);
+			$pdf->Cell(25, 4, number_format($value['detail_item_price'] * $value['detail_item_qty']), 'R', 0, 'R');
+			$pdf->Ln();
+		}
+		
+		if(count($detail) <= 15)
+		{
+			$a = 17 - count($detail);
+			for($i = 1; $i < $a; $i++)
+			{
+				$pdf->Cell($width[0], 4, '', 'LR', 0);
+				$pdf->Cell($width[1], 4, '', 'LR', 0);
+				$pdf->Cell($width[2], 4, '', 'LR', 0);
+				$pdf->Cell($width[3], 4, '', 'LR', 0);
+				$pdf->Cell($width[4], 4, '', 'LR', 0);
+				$pdf->Cell($width[5], 4, '', 'LR', 0);
+				$pdf->Ln();
+			}
+		}
+		
+		$pdf->SetFont('Arial','B',9);
+		$pdf->Cell(175, 5, 'Total Pembelian ', 'T', 0, 'R');
+		$pdf->Cell(5, 5, 'Rp', 'LTB', 0);
+		$pdf->Cell(25, 5, number_format($row->purchase_total), 'RTB', 1, 'R');	
+
+        $pdf->Output('1.pdf', 'I');
+		exit();
+    }
 }

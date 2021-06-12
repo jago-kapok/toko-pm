@@ -28,7 +28,7 @@
 		<th width="5">NO.</th>
         <th>TANGGAL</th>
         <th>PENAWARAN</th>
-        <th>PELANGGAN</th>
+        <th>CUSTOMER</th>
         <th class="text-left">TOTAL (Rp)</th>
         <th>STATUS</th>
         <th width="100" class="text-left">#</th>

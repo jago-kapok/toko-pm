@@ -103,13 +103,13 @@
     </a>
 	
 	<div class="sidebar">
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px solid white">
+      <div class="user-panel mt-3 mb-3 pb-2 d-flex" style="border-bottom: 1px solid white">
         <div class="image">
           <img src="<?= base_url('assets/'); ?>dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info" style="margin-top:-6px">
           <span class="d-block text-light">&nbsp;&nbsp;<strong><?= $this->session->userdata('user_fullname'); ?></strong></span>
-          <span class="d-block text-light">&nbsp;&nbsp;<?= $this->session->userdata('level'); ?></span>
+          <span class="d-block text-light">&nbsp;&nbsp;<i>Level : <?= $this->session->userdata('level'); ?></i></span>
         </div>
       </div>
 
@@ -176,8 +176,8 @@
               </p>
             </a>
           </li>
-		  
-		  <li class="nav-item has-treeview">
+          
+          <li class="nav-item has-treeview">
             <a href="<?= base_url('purchase'); ?>" class="nav-link" style="color:#bfd6f7">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
@@ -214,7 +214,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterQuotationReport">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterPurchaseReport">
                   <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Pembelian</p>
                 </a>
@@ -226,9 +226,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterAllReport">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterInvoiceServiceReport">
                   <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Rugi / Laba</p>
+                  <p>&nbsp;&nbsp;Penjualan (Jasa)</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterProfitReport">
+                  <i class="fas fa-caret-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Keuntungan</p>
                 </a>
               </li>
             </ul>
@@ -264,31 +270,44 @@
 	</div>
   </aside>
   
-  <div class="modal fade" id="filterQuotationReport" role="dialog">
+  <div class="modal fade" id="filterPurchaseReport" role="dialog">
 	<div class="modal-dialog modal-sm">
 	  <div class="modal-content">
 		<div class="modal-header bg-info">
-		  <h5 class="modal-title"><span>Laporan Penawaran</span></h5>
+		  <h5 class="modal-title"><span>Laporan Pembelian</span></h5>
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span>&times;</span>
 		  </button>
 		</div>
-		<form action="<?= base_url('quotationReport'); ?>" method="POST">
+		<div class="purchase">
 		  <div class="modal-body">
 			<div class="form-group">
 			  <label>Dari Tanggal <span class="text-danger">*</span></label>
-			  <input type="date" name="start_date" class="form-control form-control-sm" required>
+			  <input type="date" id="start_date" class="form-control form-control-sm" required>
 			</div>
 			<div class="form-group">
 			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
-			  <input type="date" name="finish_date" class="form-control form-control-sm" required>
+			  <input type="date" id="to_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Supplier</label>
+			  <select id="customer_id" class="form-control form-control-sm">
+				<option value="" selected>Semua</option>
+				<?php
+				  $supplier = $this->db->join('supplier', 'purchase.supplier_id = supplier.supplier_id')->get('purchase')->result_array();
+				  
+				  foreach($supplier as $row) {
+				?>
+				  <option value="<?php echo $row['supplier_id'] ?>"><?php echo $row['supplier_name'] ?></option>
+				<?php } ?>
+			  </select>
 			</div>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
-			<button type="submit" class="btn btn-primary btn-sm btn-form">Submit</button>
+			<button type="button" id="purchase_report" class="btn btn-primary btn-sm btn-form">Submit</button>
 		  </div>
-		</form>
+		</div>
 	  </div>
 	</div>
   </div>
@@ -302,27 +321,69 @@
 			<span>&times;</span>
 		  </button>
 		</div>
-		<form action="<?= base_url('invoiceReport'); ?>" method="POST">
+		<div class="invoice">
 		  <div class="modal-body">
 			<div class="form-group">
 			  <label>Dari Tanggal <span class="text-danger">*</span></label>
-			  <input type="date" name="start_date" class="form-control form-control-sm" required>
+			  <input type="date" id="start_date" class="form-control form-control-sm" required>
 			</div>
 			<div class="form-group">
 			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
-			  <input type="date" name="finish_date" class="form-control form-control-sm" required>
+			  <input type="date" id="to_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Customer</label>
+			  <select id="customer_id" class="form-control form-control-sm">
+				<option value="" selected>Semua</option>
+				<?php
+				  $customer = $this->db->get('invoice')->result_array();
+				  
+				  foreach($customer as $row) {
+				?>
+				  <option value="<?php echo $row['customer_id'] ?>"><?php echo $row['customer_desc'] ?></option>
+				<?php } ?>
+			  </select>
 			</div>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
-			<button type="submit" class="btn btn-primary btn-sm btn-form">Submit</button>
+			<button type="button" id="invoice_report" class="btn btn-primary btn-sm btn-form">Submit</button>
 		  </div>
-		</form>
+		</div>
 	  </div>
 	</div>
   </div>
   
-  <div class="modal fade" id="filterAllReport" role="dialog">
+  <div class="modal fade" id="filterInvoiceServiceReport" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+		<div class="modal-header bg-info">
+		  <h5 class="modal-title"><span>Laporan Penjualan (Jasa)</span></h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span>&times;</span>
+		  </button>
+		</div>
+		<div class="invoice_service">
+		  <div class="modal-body">
+			<div class="form-group">
+			  <label>Dari Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" id="start_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" id="to_date" class="form-control form-control-sm" required>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
+			<button type="button" id="invoice_service_report" class="btn btn-primary btn-sm btn-form">Submit</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+  <div class="modal fade" id="filterProfitReport" role="dialog">
 	<div class="modal-dialog modal-sm">
 	  <div class="modal-content">
 		<div class="modal-header bg-info">
@@ -331,22 +392,22 @@
 			<span>&times;</span>
 		  </button>
 		</div>
-		<form action="<?= base_url('allReport'); ?>" method="POST">
+		<div class="profit">
 		  <div class="modal-body">
 			<div class="form-group">
 			  <label>Dari Tanggal <span class="text-danger">*</span></label>
-			  <input type="date" name="start_date" class="form-control form-control-sm" required>
+			  <input type="date" id="start_date" class="form-control form-control-sm" required>
 			</div>
 			<div class="form-group">
 			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
-			  <input type="date" name="finish_date" class="form-control form-control-sm" required>
+			  <input type="date" id="to_date" class="form-control form-control-sm" required>
 			</div>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
-			<button type="submit" class="btn btn-primary btn-sm btn-form">Submit</button>
+			<button type="button" id="profit_report" class="btn btn-primary btn-sm btn-form">Submit</button>
 		  </div>
-		</form>
+		</div>
 	  </div>
 	</div>
   </div>

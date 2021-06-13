@@ -95,6 +95,17 @@
 	  window.open("report/printProfit/" + start_date + '/' + to_date);
 	  $('#filterProfitReport').modal('hide');
 	});
+	
+	/* ============================ */
+	/* Other Report					
+	/* ============================ */
+	$('#other_report').click(function(){
+	  var start_date	= $('.other').find('#start_date').val();
+	  var to_date		= $('.other').find('#to_date').val();
+	  
+	  window.open("report/printOther/" + start_date + '/' + to_date);
+	  $('#filterOtherReport').modal('hide');
+	});
   </script>
 </body>
 </html>

@@ -228,13 +228,19 @@
               <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterInvoiceServiceReport">
                   <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Penjualan (Jasa)</p>
+                  <p>&nbsp;&nbsp;Pendapatan (Jasa)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterProfitReport">
                   <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Keuntungan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link ml-5" data-toggle="modal" data-target="#filterOtherReport">
+                  <i class="fas fa-caret-right nav-icon"></i>
+                  <p>&nbsp;&nbsp;Debit / Kredit</p>
                 </a>
               </li>
             </ul>
@@ -255,12 +261,6 @@
                 <a href="<?= base_url('user'); ?>" class="nav-link">
                   <i class="fas fa-caret-right nav-icon"></i>
                   <p>&nbsp;&nbsp;Manajemen User</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="<?= base_url('harmet/setting'); ?>" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
-                  <p>&nbsp;&nbsp;Profil Usaha</p>
                 </a>
               </li>
             </ul>
@@ -358,7 +358,7 @@
 	<div class="modal-dialog modal-sm">
 	  <div class="modal-content">
 		<div class="modal-header bg-info">
-		  <h5 class="modal-title"><span>Laporan Penjualan (Jasa)</span></h5>
+		  <h5 class="modal-title"><span>Laporan Pendapatan (Jasa)</span></h5>
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span>&times;</span>
 		  </button>
@@ -406,6 +406,35 @@
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
 			<button type="button" id="profit_report" class="btn btn-primary btn-sm btn-form">Submit</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+  <div class="modal fade" id="filterOtherReport" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+		<div class="modal-header bg-info">
+		  <h5 class="modal-title"><span>Laporan Debit / Kredit</span></h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span>&times;</span>
+		  </button>
+		</div>
+		<div class="other">
+		  <div class="modal-body">
+			<div class="form-group">
+			  <label>Dari Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" id="start_date" class="form-control form-control-sm" required>
+			</div>
+			<div class="form-group">
+			  <label>Sampai Tanggal <span class="text-danger">*</span></label>
+			  <input type="date" id="to_date" class="form-control form-control-sm" required>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger btn-sm btn-form" data-dismiss="modal">Batal</button>
+			<button type="button" id="other_report" class="btn btn-primary btn-sm btn-form">Submit</button>
 		  </div>
 		</div>
 	  </div>

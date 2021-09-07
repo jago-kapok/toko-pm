@@ -10,9 +10,10 @@ var table = $("table#table_data").DataTable({
 	  next: "<i class=\"fa fa-chevron-right\"></i>"
 	},
   },
-  bInfo 		: false,
+  bInfo 		: true,
   bLengthChange : false,
   serverSide	: true,
+  scrollX		: true,
   ajax	: {
 	url	: "<?= base_url('item/getData'); ?>",
 	type: "GET"
@@ -49,6 +50,10 @@ $('#searching').on('keyup', function(){
 
 $('select#pagelength').on('change', function(){
   table.page.len(this.value).draw();
+});
+
+$('.filter-category').on('click', function(){
+  table.search(this.id).draw();
 });
 
 // Show data on modal

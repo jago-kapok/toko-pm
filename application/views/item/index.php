@@ -10,6 +10,16 @@
 	  <div class="input-group">
 		<input id="searching" class="form-control form-control-sm" placeholder="Cari Data ...">
 		<div class="input-group-prepend">
+		  <div class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+			<i class="fa fa-filter"></i>&nbsp;&nbsp;Kategori
+			<div class="dropdown-menu dropdown-menu-right">
+			  <?php foreach($category AS $value) { ?>
+				<a id="<?php echo $value['category_id'] ?>" href="javascript:void(0)" class="dropdown-item filter-category"><?php echo $value['category_desc']; ?></a>
+			  <?php } ?>
+			</div>
+		  </div>
+		</div>
+		<div class="input-group-prepend">
 		  <div class="">
 			<select id="pagelength" class="form-control form-control-sm" readonly>
 			  <option value="10">10</option>
@@ -32,7 +42,7 @@
         <th width="5%">SATUAN</th>
         <th width="15%" class="text-left">HARGA JUAL (Rp)</th>
         <th width="20%">SUPPLIER</th>
-        <th width="10%">#</th>
+        <th width="10%" class="text-left">#</th>
       </tr>
     </thead>
   </table>

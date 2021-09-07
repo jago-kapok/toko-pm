@@ -10,9 +10,10 @@ var table = $("table#table_data").DataTable({
 	  next: "<i class=\"fa fa-chevron-right\"></i>"
 	},
   },
-  bInfo 		: false,
+  bInfo 		: true,
   bLengthChange : false,
   serverSide	: true,
+  scrollX		: true,
   ajax	: {
 	url	: "<?= base_url('quotation/getData'); ?>",
 	type: "GET"

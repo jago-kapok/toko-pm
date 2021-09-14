@@ -2,9 +2,9 @@
   <?= $this->session->flashdata('message'); ?>
   <div class="row mb-1">
 	<div class="col-md-8">
-	  <button type="button" class="btn btn-success btn-sm"><i class="fa fa-file-download"></i>
+	  <!--<button type="button" class="btn btn-success btn-sm"><i class="fa fa-file-download"></i>
 	    &nbsp;&nbsp;Export Stok
-	  </button>
+	  </button>-->
 	</div>
 	<div class="col-md-4 pull-right">
 	  <div class="input-group">

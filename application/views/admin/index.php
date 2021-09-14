@@ -197,7 +197,7 @@
                   <?php } ?>
 
                   <?php
-                  if (isset($invoice_per_day->invoice_total)) {
+                  if (isset($invoice_per_day->invoice_total) && $invoice_yesterday->invoice_total > 0) {
                     echo round((($invoice_per_day->invoice_total - $invoice_yesterday->invoice_total) / $invoice_yesterday->invoice_total) * 100, 2);
                   }
                   ?> %
@@ -224,7 +224,7 @@
                   <?php } ?>
 
                   <?php
-                  if (isset($invoice_per_day->invoice_total)) {
+                  if (isset($invoice_per_day->invoice_total) && $invoice_yesterday->invoice_total > 0) {
 
                     echo round((($invoice_per_day->invoice_total - $profit_per_day->invoice_profit) - ($invoice_yesterday->invoice_total - $profit_yesterday->invoice_profit)) / ($invoice_yesterday->invoice_total - $profit_yesterday->invoice_profit) * 100, 2);
                   }

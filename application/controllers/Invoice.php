@@ -123,7 +123,7 @@ class Invoice extends CI_Controller
 		}
 		
 		$result = array();
-		foreach($_POST['detail_item_price'] AS $key => $value){
+		foreach($_POST['detail_item_price'] as $key => $value){
 			$item_id	= $_POST['detail_item_id'][$key];
 			$item_qty	= $_POST['detail_item_qty'][$key];
 			

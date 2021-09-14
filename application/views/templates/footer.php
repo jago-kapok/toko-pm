@@ -30,6 +30,23 @@
 	$('.form-control').attr('autocomplete','off');
 	
 	/* ============================ */
+	/* Prevent Enter						
+	/* ============================ */
+	$('.form-control').keydown(function(e){
+		if(e.keyCode == 13){
+			e.preventDefault();
+			return false;
+		}
+	});
+	
+	$('.form-control').keypress(function(e){
+		if(e.keyCode == 13){
+			e.preventDefault();
+			return false;
+		}
+	});
+	
+	/* ============================ */
 	/* Number Only							
 	/* ============================ */
     $('.number').keypress(function(event){

@@ -84,7 +84,13 @@ class Item extends CI_Controller
 		
 		if($exist->num_rows() == 0){
 			$this->MasterModel->add('item', $data);
-			$this->MasterModel->add('stock', array('item_id'=>$this->db->insert_id()));
+			$this->MasterModel->add('stock',
+				array(
+					'item_id'=>$this->db->insert_id(),
+					'stock_min'=>1,
+					'stock_exist'=>5
+				)
+			);
 			
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Data berhasil ditambahkan !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		} else {

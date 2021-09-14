@@ -39,7 +39,7 @@ class Customer extends CI_Controller
 			["db" => "customer_id",		"dt" => "customer_id"]
 		];
 		
-		$_where	= NULL;
+		$_where	= "customer_id != 1";
 		$_join	= NULL;
 		
 		// if (!isset($_GET["order"][0]["column"]) || $_GET["order"][0]["column"] == "") {
